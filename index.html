@@ -59,6 +59,30 @@
 </div>
             <h1 class="book-title">O CÓDICE NEXUS</h1>
             <h2>DEPLOY AUTÔNOMO & ARQUITETURA TRANSFORMER</h2>
+    <div class="stat-grid" style="max-width:700px; margin: 40px auto;">
+        <div class="stat-card">
+            <span class="stat-number">130+</span>
+            <span class="stat-label">Agentes IA</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">9</span>
+            <span class="stat-label">Estratégias RAG</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">150+</span>
+            <span class="stat-label">Páginas</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">A1</span>
+            <span class="stat-label">Qualis CNPq</span>
+        </div>
+    </div>
+    <p>
+        <span class="author-badge">✍️ Marcelo Claro</span>
+        <span class="author-badge">🌌 NEXUS Edition</span>
+        <span class="author-badge">⚡ Vibe Code</span>
+    </p>
+    
             <p style="font-size: 1.5em; margin-top: 50px; color: #ff99aa;">O Guia Técnico, Acadêmico e Autodidático de Orquestração</p>
             <p style="margin-top: 50px; font-family: 'Fira Code', monospace; letter-spacing: 2px;">AUTOR: MARCELO CLARO</p>
             <p><strong>Mais de 150 Páginas de Conhecimento Fundido</strong></p>
@@ -2361,6 +2385,25 @@ def auditar_dados_economicos(artigo_path: str):
             tocList.appendChild(li);
         });
     });
+</script>
+
+
+<script>
+// Barra de progresso de leitura
+(function() {
+    const bar = document.createElement('div');
+    bar.innerHTML = '<div class="reading-progress"><div id="progress-bar"></div></div>';
+    document.body.prepend(bar.firstChild);
+    
+    window.addEventListener('scroll', function() {
+        const winHeight = window.innerHeight;
+        const docHeight = document.body.scrollHeight;
+        const scrolled = window.scrollY;
+        const pct = (scrolled / (docHeight - winHeight)) * 100;
+        const pb = document.getElementById('progress-bar');
+        if (pb) pb.style.width = Math.min(pct, 100) + '%';
+    });
+})();
 </script>
 
 </body>
