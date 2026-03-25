@@ -8,7 +8,7 @@
   <p><strong>Ecossistema Multi-Agente Autônomo com Roteamento RAG-3E e Arquitetura Transformer Local</strong></p>
   
   <p>
-    <a href="https://MarceloClaro.github.io/maswos-v5-nexus/O_CODICE_NEXUS_EDICAO_MEISTER.html">
+    <a href="https://htmlpreview.github.io/?https://github.com/MarceloClaro/maswos-v5-nexus/blob/main/index.html">
       <img src="https://img.shields.io/badge/📖%20LEITURA%20ONLINE-LER%20O%20LIVRO%20COMPLETO%20(150+%20PG)-FF3366?style=for-the-badge" alt="Ler o Livro / Códice">
     </a>
   </p>
@@ -77,6 +77,6 @@ python run_thesis_god_mode.py
 O aprendizado desta máquina foi documentado visando a mais alta retenção neurocientífica em **O CÓDICE NEXUS**.
 Acesse as "150 Páginas Dinâmicas do Livro Diretamente Pela Web (Hospedagem GitHub Pages) clicando no Box Principal ou em: 
 
-🔗 **[https://MarceloClaro.github.io/maswos-v5-nexus/O_CODICE_NEXUS_EDICAO_MEISTER.html](https://MarceloClaro.github.io/maswos-v5-nexus/O_CODICE_NEXUS_EDICAO_MEISTER.html)**
+🔗 **[https://htmlpreview.github.io/?https://github.com/MarceloClaro/maswos-v5-nexus/blob/main/index.html](https://htmlpreview.github.io/?https://github.com/MarceloClaro/maswos-v5-nexus/blob/main/index.html)**
 
 > *"Execute. Orquestre. Sublime." — Marcelo Claro.*
