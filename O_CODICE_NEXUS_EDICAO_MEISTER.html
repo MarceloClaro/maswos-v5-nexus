@@ -434,6 +434,149 @@ tbody tr:hover { background: var(--ink-3); }
   .hs-num { color: #b91c1c; }
   .hero-img { max-width: 400px; }
 }
+
+/* =====================================================================
+   MOTION LAYER — Kinetic, purposeful, 60fps (transform+opacity only)
+   Principio: animate meaning, not decoration.
+   ===================================================================== */
+
+/* Scroll reveal base state */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s cubic-bezier(.16,1,.3,1),
+              transform .55s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Stagger delays for groups */
+.reveal-group .reveal:nth-child(1){ transition-delay: 0ms; }
+.reveal-group .reveal:nth-child(2){ transition-delay: 65ms; }
+.reveal-group .reveal:nth-child(3){ transition-delay: 130ms; }
+.reveal-group .reveal:nth-child(4){ transition-delay: 195ms; }
+.reveal-group .reveal:nth-child(5){ transition-delay: 260ms; }
+.reveal-group .reveal:nth-child(6){ transition-delay: 325ms; }
+
+/* Hero kinetic entrance */
+.hero-title {
+  animation: heroIn 1.1s cubic-bezier(.16,1,.3,1) both;
+}
+.hero-eyebrow {
+  animation: heroIn .9s cubic-bezier(.16,1,.3,1) .1s both;
+}
+.hero-byline {
+  animation: heroIn .9s cubic-bezier(.16,1,.3,1) .2s both;
+}
+.hero-stats  {
+  animation: heroIn .9s cubic-bezier(.16,1,.3,1) .35s both;
+}
+.hero-meta {
+  animation: heroIn .8s cubic-bezier(.16,1,.3,1) .5s both;
+}
+
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Stat number rolling animation (game counter) */
+.hs-num {
+  display: block;
+  transition: color .2s;
+}
+
+/* Chapter header — slide-in left accent */
+h2.level-header {
+  transition: border-left-color .3s, background .3s;
+}
+h2.level-header:hover {
+  border-left-color: var(--accent);
+  background: rgba(214,60,82,.04);
+}
+
+/* TOC items — keyboard-accessible, no layout shift */
+.toc-item {
+  transition: color .15s, padding-left .15s;
+  will-change: transform; /* GPU layer hint */
+}
+.toc-item:hover {
+  padding-left: 6px;
+}
+.toc-item.visited .toc-num {
+  color: var(--accent);
+  opacity: .5;
+}
+
+/* Top nav pill — active indicator dot */
+#chapter-pills a {
+  position: relative;
+}
+#chapter-pills a.active::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Mini-index active — stronger treatment */
+.mi-list a.active {
+  font-weight: 500;
+  letter-spacing: .2px;
+}
+
+/* Hero image — subtle scale on load */
+.hero-img {
+  animation: imgIn 1.4s cubic-bezier(.16,1,.3,1) .4s both;
+}
+@keyframes imgIn {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Progress bar — glint sweep */
+#progress span::after {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 60px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  animation: glint 2s ease-in-out infinite;
+}
+#progress { position: fixed; overflow: hidden; }
+#progress span { position: relative; }
+
+@keyframes glint {
+  0%   { transform: translateX(-60px); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateX(0); opacity: 0; }
+}
+
+/* Code blocks — appear on scroll */
+pre { transition: box-shadow .3s; }
+pre:hover {
+  box-shadow: 0 0 0 1px var(--rule), 4px 4px 0 var(--accent);
+}
+
+/* TOC search — clear button styling */
+#toc-search::-webkit-search-cancel-button {
+  cursor: pointer; opacity: .5;
+}
+
+/* Reduced motion — respects OS preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-title, .hero-eyebrow, .hero-byline,
+  .hero-stats, .hero-meta, .hero-img {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  #progress span::after { animation: none; }
+  .toc-item:hover { padding-left: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -3003,6 +3146,84 @@ window.addEventListener('scroll', function() {
 
   headers.forEach(function(h) { obs.observe(h); });
 })();
+
+// ── SCROLL REVEAL — IntersectionObserver, 60fps via transform+opacity ──
+(function() {
+  var revealEls = document.querySelectorAll(
+    'h2.level-header, h3.sub-header, p, pre, .alert-box, ' +
+    '.tip-box, .info-box, blockquote, .tw, .mermaid, ' +
+    '.toc-item, .toc-search-wrap'
+  );
+
+  revealEls.forEach(function(el) {
+    el.classList.add('reveal');
+  });
+
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    revealEls.forEach(function(el) { revObs.observe(el); });
+  } else {
+    // Fallback: just show everything
+    revealEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+})();
+
+// ── STAT COUNTER ANIMATION — game-score style tick-up ──────────────────
+(function() {
+  var stats = [
+    { el: document.querySelector('.hero-stats .hero-stat:nth-child(1) .hs-num'), target: 130, suffix: '+' },
+    { el: document.querySelector('.hero-stats .hero-stat:nth-child(2) .hs-num'), target: 9,   suffix: '' },
+    { el: document.querySelector('.hero-stats .hero-stat:nth-child(3) .hs-num'), target: 150, suffix: '+' },
+    { el: document.querySelector('.hero-stats .hero-stat:nth-child(4) .hs-num'), target: null, suffix: '' }
+  ];
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function animateCount(el, target, suffix, duration) {
+    if (!el || target === null) return;
+    var start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var val = Math.round(easeOut(progress) * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Trigger when hero stats enter viewport
+  var statsSection = document.querySelector('.hero-stats');
+  if (statsSection && 'IntersectionObserver' in window) {
+    var once = false;
+    var cntObs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !once) {
+        once = true;
+        animateCount(stats[0].el, 130, '+', 900);
+        animateCount(stats[1].el, 9,   '',  700);
+        animateCount(stats[2].el, 150, '+', 800);
+        cntObs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    cntObs.observe(statsSection);
+  }
+})();
+
+// ── TOC VISITED STATE — mark items clicked ─────────────────────────────
+document.querySelectorAll('.toc-item').forEach(function(a) {
+  a.addEventListener('click', function() {
+    this.classList.add('visited');
+  });
+});
+
 </script>
 </body>
 </html>
