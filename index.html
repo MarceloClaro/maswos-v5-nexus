@@ -2323,5 +2323,40 @@ def auditar_dados_economicos(artigo_path: str):
             <p style="color: #444; font-size: 0.8em; margin-top: 50px;">FIM DO DOCUMENTO</p>
         </div>
     </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Envolve o conteúdo existente no main-content e cria o sidebar
+        const bodyContent = document.body.innerHTML;
+        document.body.innerHTML = `
+            <nav id="sidebar">
+                <h3>🌌 CÓDICE NEXUS</h3>
+                <ul id="toc-list"></ul>
+            </nav>
+            <main class="main-content">
+                ${bodyContent}
+            </main>
+        `;
+
+        const tocList = document.getElementById('toc-list');
+        const headers = document.querySelectorAll('.level-header');
+
+        headers.forEach((header, index) => {
+            if(!header.id) header.id = 'level-' + (index + 1);
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + header.id;
+            
+            // Limpeza de texto para um menu elegante
+            let text = header.innerText.replace('🔥', '').trim();
+            if(text.length > 35) text = text.substring(0, 35) + "...";
+            a.innerText = text;
+            
+            li.appendChild(a);
+            tocList.appendChild(li);
+        });
+    });
+</script>
+
 </body>
 </html>
