@@ -1,0 +1,350 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema.json",
+  "version": "5.1.0-NEXUS-ENHANCED",
+  "description": "Enhanced MCP Integration with Intelligent Routing, Skill Mapping, and Cross-MCP Communication",
+  
+  "architecture": {
+    "name": "Transformer Network Enhanced",
+    "core_principles": {
+      "isonomy": "All agents equal, direct peer-to-peer communication",
+      "transformation": "Dynamic capability injection on-demand",
+      "granularity": "Surgical precision at function/method level",
+      "auto_organization": "Self-configure, self-optimize, self-repair, self-evolve"
+    },
+    "layers": {
+      "input": ["Intent Parser", "Intent Router", "RAG Builder"],
+      "routing": ["Skill Matcher", "Agent Selector", "MCP Router"],
+      "execution": ["Parallel Executor", "Sequential Chain", "Hybrid Mode"],
+      "validation": ["Cross-Validator", "Quality Gate", "Threshold Check"],
+      "aggregation": ["Result Aggregator", "Context Merger", "Output Synthesizer"],
+      "output": ["Formatter", "Compliance Check", "Quality Score"]
+    }
+  },
+
+  "intelligent_routing": {
+    "description": "Central routing system that maps user intent to optimal agent/skill/MCP combination",
+    "intent_classification": {
+      "juridico": {
+        "patterns": ["petição", "jurisprudência", "advogado", "tribunal", "processo", "sentença", "recurso", "direito"],
+        "mcp": "juridico",
+        "agents": ["jurista-supremo", "especialista-civil", "especialista-penal", "especialista-trabalhista"],
+        "skills": ["legal-agents", "juridico-workflow"],
+        "tier_routing": {
+          "MAGNUM": {"agents": 60, "documents": "110+"},
+          "STANDARD": {"agents": 45, "documents": "30-110"},
+          "EXPRESS": {"agents": 30, "documents": "5-30"}
+        }
+      },
+      "academic": {
+        "patterns": ["artigo", "pesquisa", "dissertação", "tese", "paper", "qualis", "acadêmico"],
+        "mcp": "academic",
+        "agents": ["research-planner", "paper-collector", "methodology-generator"],
+        "skills": ["criador-de-artigo-v2", "academic-research"],
+        "scrapers": ["arxiv", "pubmed", "semantic-scholar", "doaj", "capes", "ibge"]
+      },
+      "auditoria": {
+        "patterns": ["audite", "auditoria", "corrigir", "validar", "parecer", "qualis", "avalie", "revisar", "banca", "10/10"],
+        "mcp": "academic",
+        "agents": ["auditor-estatistico", "auditor-dados", "auditor-citacoes", "auditor-qualis"],
+        "skills": ["pipeline-auditoria-completa", "auditor-qualis-a1"],
+        "tier_routing": {
+          "MAGNUM": {"agents": 20, "documents": "110+"},
+          "STANDARD": {"agents": 15, "documents": "30-110"},
+          "EXPRESS": {"agents": 10, "documents": "5-30"}
+        }
+      },
+      "skill_generation": {
+        "patterns": ["criar skill", "gerar skill", "desenvolver skill", "skill novo"],
+        "mcp": "maswos-mcp",
+        "agents": ["domain-analyzer", "scope-mapper", "agent-factory", "skill-assembler"],
+        "skills": ["mcp-builder", "ecosystem-create-skill"]
+      },
+      "development": {
+        "patterns": ["criar", "desenvolver", "implementar", "api", "web", "app", "frontend", "backend"],
+        "mcp": "opencode",
+        "agents": ["frontend-specialist", "backend-specialist", "devops-engineer", "database-architect"],
+        "skills": ["react-best-practices", "nodejs-best-practices", "api-patterns"]
+      },
+      "security": {
+        "patterns": ["segurança", "vulnerabilidade", "auditoria", "pentest", "scan"],
+        "mcp": "opencode",
+        "agents": ["security-auditor", "penetration-tester"],
+        "skills": ["vulnerability-scanner", "red-team-tactics"]
+      },
+      "testing": {
+        "patterns": ["teste", "testar", "coverage", "e2e", "unit"],
+        "mcp": "opencode",
+        "agents": ["test-engineer", "qa-automation-engineer"],
+        "skills": ["testing-patterns", "tdd-workflow", "webapp-testing"]
+      },
+      "documentation": {
+        "patterns": ["documentação", "readme", "docs", "manual"],
+        "mcp": "opencode",
+        "agents": ["documentation-writer"],
+        "skills": ["documentation-templates"]
+      },
+      "database": {
+        "patterns": ["banco", "schema", "sql", "migration", "query"],
+        "mcp": "opencode",
+        "agents": ["database-architect"],
+        "skills": ["database-design"]
+      },
+      "performance": {
+        "patterns": ["otimizar", "performance", "profiling", "lento"],
+        "mcp": "opencode",
+        "agents": ["performance-optimizer"],
+        "skills": ["performance-profiling", "react-best-practices"]
+      },
+      "seo": {
+        "patterns": ["seo", "google", "busca", "ranking"],
+        "mcp": "opencode",
+        "agents": ["seo-specialist"],
+        "skills": ["seo-fundamentals"]
+      }
+    },
+    "fallback_strategy": {
+      "default_mcp": "opencode",
+      "default_agents": ["general"],
+      "escalation": "orchestrator"
+    }
+  },
+
+  "skill_agent_mapping": {
+    "description": "Dynamic mapping between agents and available skills",
+    "mappings": {
+      "antigravity-kit": {
+        "agents": ["all"],
+        "skills": [
+          {"name": "api-patterns", "domain": "backend", "trigger": "api_design"},
+          {"name": "app-builder", "domain": "fullstack", "trigger": "new_app"},
+          {"name": "architecture", "domain": "architecture", "trigger": "architecture_decision"},
+          {"name": "bash-linux", "domain": "devops", "trigger": "linux_command"},
+          {"name": "behavioral-modes", "domain": "meta", "trigger": "mode_selection"},
+          {"name": "brainstorming", "domain": "planning", "trigger": "complex_request"},
+          {"name": "clean-code", "domain": "coding", "trigger": "code_quality"},
+          {"name": "code-review-checklist", "domain": "review", "trigger": "code_review"},
+          {"name": "database-design", "domain": "data", "trigger": "db_design"},
+          {"name": "deployment-procedures", "domain": "devops", "trigger": "deploy"},
+          {"name": "documentation-templates", "domain": "docs", "trigger": "create_docs"},
+          {"name": "frontend-design", "domain": "frontend", "trigger": "ui_design"},
+          {"name": "game-development", "domain": "gaming", "trigger": "game_project"},
+          {"name": "geo-fundamentals", "domain": "geospatial", "trigger": "geo_data"},
+          {"name": "i18n-localization", "domain": "frontend", "trigger": "internationalization"},
+          {"name": "intelligent-routing", "domain": "meta", "trigger": "routing"},
+          {"name": "lint-and-validate", "domain": "quality", "trigger": "validation"},
+          {"name": "mcp-builder", "domain": "development", "trigger": "build_mcp"},
+          {"name": "mobile-design", "domain": "mobile", "trigger": "mobile_app"},
+          {"name": "nextjs-react-expert", "domain": "frontend", "trigger": "react_project"},
+          {"name": "nodejs-best-practices", "domain": "backend", "trigger": "node_project"},
+          {"name": "parallel-agents", "domain": "orchestration", "trigger": "multi_agent"},
+          {"name": "performance-profiling", "domain": "performance", "trigger": "optimization"},
+          {"name": "plan-writing", "domain": "planning", "trigger": "planning"},
+          {"name": "powershell-windows", "domain": "devops", "trigger": "windows_command"},
+          {"name": "python-patterns", "domain": "backend", "trigger": "python_project"},
+          {"name": "red-team-tactics", "domain": "security", "trigger": "security_testing"},
+          {"name": "rust-pro", "domain": "backend", "trigger": "rust_project"},
+          {"name": "seo-fundamentals", "domain": "seo", "trigger": "seo_optimization"},
+          {"name": "server-management", "domain": "devops", "trigger": "server_config"},
+          {"name": "systematic-debugging", "domain": "debug", "trigger": "debugging"},
+          {"name": "tailwind-patterns", "domain": "frontend", "trigger": "css_styling"},
+          {"name": "tdd-workflow", "domain": "testing", "trigger": "test_driven"},
+          {"name": "testing-patterns", "domain": "testing", "trigger": "testing"},
+          {"name": "vulnerability-scanner", "domain": "security", "trigger": "vulnerability_scan"},
+          {"name": "web-design-guidelines", "domain": "frontend", "trigger": "web_design"},
+          {"name": "webapp-testing", "domain": "testing", "trigger": "e2e_testing"}
+        ]
+      },
+      "maswos-academic": {
+        "agents": ["academic-collector", "research-planner", "paper-collector", "auditor-estatistico", "auditor-dados", "auditor-citacoes", "auditor-qualis"],
+        "skills": [
+          {"name": "criador-de-artigo-v2", "domain": "academic", "trigger": "create_article", "tier": 1},
+          {"name": "auditor-estatistico", "domain": "audit", "trigger": "audit_estatisticas", "tier": 2},
+          {"name": "auditor-dados-economicos", "domain": "audit", "trigger": "audit_dados", "tier": 2},
+          {"name": "auditor-citacoes", "domain": "audit", "trigger": "audit_citacoes", "tier": 2},
+          {"name": "auditor-dados-datasets", "domain": "audit", "trigger": "audit_datasets", "tier": 2},
+          {"name": "auditor-tratamento-dados", "domain": "audit", "trigger": "audit_tratamento", "tier": 2},
+          {"name": "auditor-metodologia-analise", "domain": "audit", "trigger": "audit_metodologia", "tier": 2},
+          {"name": "auditor-qualis-a1", "domain": "audit", "trigger": "audit_qualis", "tier": 1},
+          {"name": "pipeline-auditoria-completa", "domain": "audit", "trigger": "audit_completo", "tier": 1}
+        ]
+      },
+      "maswos-juridico": {
+        "agents": ["all"],
+        "skills": [
+          {"name": "juridico-workflow", "domain": "legal", "trigger": "legal_task", "agents": 60}
+        ]
+      }
+    },
+    "auto_injection": {
+      "enabled": true,
+      "strategy": "context_based",
+      "skills_per_agent": 5,
+      "refresh_on_context_change": true
+    }
+  },
+
+  "mcp_cross_communication": {
+    "description": "Protocol for MCPs to communicate and share context",
+    "mcp_registry": {
+      "maswos-juridico": {
+        "endpoint": "http://localhost:3001/mcp",
+        "type": "legal",
+        "agents": 60,
+        "capabilities": ["peticao", "jurisprudencia", "legislacao", "parecer", "contrato"],
+        "health_check": {"interval": 60, "timeout": 5},
+        "status": "configured"
+      },
+      "maswos-mcp": {
+        "endpoint": "http://localhost:3002/mcp",
+        "type": "skill-generation",
+        "agents": 15,
+        "capabilities": ["create_skill", "generate_agents", "validate_skill"],
+        "health_check": {"interval": 60, "timeout": 5},
+        "status": "configured"
+      },
+      "academic": {
+        "endpoint": "http://localhost:3003/mcp",
+        "type": "academic-research",
+        "agents": 55,
+        "capabilities": ["research_paper", "collect_data", "validate_methodology", "scrape_government"],
+        "health_check": {"interval": 60, "timeout": 5},
+        "status": "configured",
+        "scrapers": {
+          "academic": ["arxiv", "pubmed", "semantic-scholar", "doaj", "core", "openalex", "aminer"],
+          "government": ["ibge", "datasus", "inpe", "worldbank", "dadosgov", "capes"]
+        }
+      },
+      "pageindex": {
+        "endpoint": "https://api.pageindex.ai/mcp",
+        "type": "vectorless-rag",
+        "agents": 10,
+        "capabilities": ["index_documents", "query_documents", "tree_reasoning"],
+        "features": {"vectorless_rag": true, "tree_indexing": true},
+        "status": "active"
+      },
+      "opencode": {
+        "endpoint": "stdio",
+        "type": "ai-coding-agent",
+        "agents": 17,
+        "capabilities": ["build", "edit", "ask", "plan", "orchestrate"],
+        "status": "active"
+      },
+      "filesystem": {
+        "endpoint": "stdio",
+        "type": "file-operations",
+        "capabilities": ["read", "write", "glob", "grep"],
+        "status": "active"
+      },
+      "github": {
+        "endpoint": "http",
+        "type": "version-control",
+        "capabilities": ["issues", "pr", "repo"],
+        "auth": "token",
+        "status": "configured"
+      }
+    },
+    "communication_protocols": {
+      "context_sharing": {
+        "enabled": true,
+        "formats": ["json", "markdown", "structured"],
+        "fields": ["session_id", "context", "entities", "quality_score", "audit_trail"]
+      },
+      "result_merging": {
+        "strategies": [
+          {"name": "weighted_merge", "weight_by": "relevance_score"},
+          {"name": "priority_order", "priority": ["maswos-juridico", "academic", "maswos-mcp"]},
+          {"name": "consensus", "requires": "majority_agreement"}
+        ]
+      },
+      "parallel_execution": {
+        "threshold": 3,
+        "max_concurrent": 5,
+        "timeout_ms": 30000,
+        "retry_attempts": 3
+      }
+    },
+    "mcp_dependencies": {
+      "juridico": {"depends_on": [], "provides": ["legal_context", "jurisprudence", "legislation"]},
+      "maswos-mcp": {"depends_on": ["juridico", "academic"], "provides": ["generated_skills", "new_agents"]},
+      "academic": {"depends_on": [], "provides": ["research_data", "papers", "datasets", "government_data"]},
+      "pageindex": {"depends_on": ["academic"], "provides": ["reasoned_answers", "document_queries"]},
+      "opencode": {"depends_on": ["juridico", "academic", "maswos-mcp"], "provides": ["code", "implementation"]}
+    }
+  },
+
+  "handoff_protocol": {
+    "description": "Protocol for passing context between agents with full context preservation",
+    "required_fields": {
+      "basic": ["session_id", "agent_source", "agent_target", "timestamp", "context"],
+      "enhanced": ["quality_score", "audit_trail", "intermediate_results", "entities", "mcp_context"]
+    },
+    "context_preservation": {
+      "enabled": true,
+      "max_depth": 10,
+      "fields_to_preserve": ["original_request", "decisions", "previous_work", "current_state"]
+    },
+    "error_handling": {
+      "quality_below_threshold": {"action": "retry", "max_attempts": 3},
+      "timeout": {"action": "fallback_agent", "fallback": "general"},
+      "invalid_context": {"action": "reject", "alert": "user"}
+    },
+    "escalation_rules": {
+      "max_handoffs": 5,
+      "escalation_threshold": 0.7,
+      "escalate_to": "orchestrator"
+    }
+  },
+
+  "quality_gates": {
+    "G0": {"name": "Input Validation", "threshold": 1.0, "agents": ["intent_parser"], "auto_apply": true},
+    "G1": {"name": "Routing Validation", "threshold": 0.85, "agents": ["intent_router", "skill_matcher"], "auto_apply": true},
+    "G2": {"name": "Execution Validation", "threshold": 0.90, "agents": ["cross_mcp_validator"], "auto_apply": true},
+    "G3": {"name": "Aggregation Validation", "threshold": 0.92, "agents": ["result_aggregator"], "auto_apply": true},
+    "GF": {"name": "Final Output", "threshold": 0.95, "agents": ["quality_scorer", "compliance_check"], "auto_apply": true}
+  },
+
+  "monitoring": {
+    "status_tracking": true,
+    "latency_metrics": true,
+    "error_rate_tracking": true,
+    "quality_score_tracking": true,
+    "health_checks": {
+      "interval_seconds": 60,
+      "timeout_seconds": 5,
+      "retry_on_failure": true
+    },
+    "alerting": {
+      "enabled": true,
+      "thresholds": {
+        "latency_ms": 5000,
+        "error_rate": 0.1,
+        "quality_below": 0.80
+      }
+    }
+  },
+
+  "integration_paths": {
+    "user_request": {
+      "flow": "user → intent_parser → routing → skill_matcher → agent_selection → mcp_routing → execution → validation → aggregation → output",
+      "estimated_steps": 8
+    },
+    "orchestration_mode": {
+      "flow": "orchestrator → planning_phase → approval → parallel_agents → verification → synthesis → output",
+      "minimum_agents": 3
+    },
+    "skill_creation": {
+      "flow": "user → intent_parser → maswos-mcp → domain_analyzer → scope_mapper → agent_factory → skill_assembler → validation → output",
+      "tier_routing": true
+    },
+    "academic_research": {
+      "flow": "user → intent_parser → academic_mcp → scrapers → validator → pageindex_rag → cross_validate → synthesis → output",
+      "scraper_fallback": true
+    }
+  },
+
+  "skills_location": {
+    "antigravity_kit": "C:/Users/marce/.opencode/skills/antigravity-kit/skills/",
+    "maswos_academic": "C:/Users/marce/.opencode/skills/maswos-academic/",
+    "local_skills": "C:/Users/marce/Downloads/maswos-v5-nexus-dist/.agent/skills/"
+  }
+}

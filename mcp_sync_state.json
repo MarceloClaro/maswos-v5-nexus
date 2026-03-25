@@ -1,0 +1,42 @@
+{
+  "last_sync": "2026-03-21",
+  "maswos_count": 8,
+  "ecosystem_count": 9,
+  "plan": {
+    "add_to_maswos": [
+      {
+        "id": "02_query_builder",
+        "name": "Query Builder",
+        "layer": "encoder"
+      },
+      {
+        "id": "06_skill_synthesizer",
+        "name": "Skill Synthesizer",
+        "layer": "decoder"
+      }
+    ],
+    "add_to_ecosystem": [
+      {
+        "id": "skill_assembler",
+        "name": "Skill Assembler",
+        "layer": "Decoder"
+      }
+    ],
+    "align_layers": [],
+    "commands": [
+      "# Adicionar a maswos-mcp:",
+      "# Agent: Query Builder (02_query_builder)",
+      "# Layer: encoder",
+      "# Adicionar a maswos-mcp:",
+      "# Agent: Skill Synthesizer (06_skill_synthesizer)",
+      "# Layer: decoder",
+      "# Adicionar a ecosystem-transformer:",
+      "# Agent: Skill Assembler (skill_assembler)",
+      "# Layer: Decoder",
+      "",
+      "# Layer alignment:",
+      "# maswos-mcp constraint_checker: Encoder -> ecosystem: Validation",
+      "# ecosystem critic_router: Decoder -> maswos-mcp: Control"
+    ]
+  }
+}

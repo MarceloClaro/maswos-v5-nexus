@@ -1,0 +1,118 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema.json",
+  "mcpServers": {
+    "maswos-juridico": {
+      "type": "http",
+      "url": "http://localhost:3001/mcp",
+      "transport": "sse"
+    },
+    "maswos-mcp": {
+      "type": "http", 
+      "url": "http://localhost:3002/mcp",
+      "transport": "sse"
+    },
+    "maswos-rag": {
+      "type": "http",
+      "url": "http://localhost:3003/mcp",
+      "transport": "sse"
+    },
+    "pageindex": {
+      "type": "http",
+      "url": "https://api.pageindex.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer ${PAGEINDEX_API_KEY}"
+      }
+    },
+    "opencode": {
+      "command": "npx",
+      "args": ["-y", "opencode-mcp"],
+      "env": {
+        "MCP_TRANSPORT": "stdio"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\marce\\Downloads\\maswos-v5-nexus-dist"]
+    },
+    "sqlite": {
+      "command": "npx", 
+      "args": ["-y", "@modelcontextprotocol/server-sqlite"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "maswos_config": {
+    "version": "5.0.0-NEXUS",
+    "mcp_registry": {
+      "juridico": {
+        "endpoint": "http://localhost:3001/mcp",
+        "agents": 60,
+        "status": "configured"
+      },
+      "maswos_mcp": {
+        "endpoint": "http://localhost:3002/mcp",
+        "agents": 15,
+        "status": "configured"
+      },
+      "maswos_rag": {
+        "endpoint": "http://localhost:3003/mcp",
+        "agents": 21,
+        "status": "configured",
+        "strategies": 9
+      },
+      "pageindex": {
+        "endpoint": "https://api.pageindex.ai/mcp",
+        "type": "vectorless_rag",
+        "status": "active",
+        "documents_indexed": 2
+      },
+      "opencode": {
+        "endpoint": "stdio",
+        "type": "ai_coding_agent",
+        "status": "active"
+      },
+      "filesystem": {
+        "endpoint": "stdio",
+        "type": "file_operations",
+        "status": "active",
+        "root": "C:\\Users\\marce\\Downloads\\maswos-v5-nexus-dist"
+      }
+    },
+    "rag_strategies": {
+      "pageindex": {
+        "name": "Vectorless RAG (PageIndex)",
+        "description": "Tree-based reasoning RAG sem vector DB",
+        "accuracy": "98.7% on FinanceBench",
+        "features": ["no_chunking", "context_preservation", "reasoning_search"]
+      },
+      "maswos_rag": {
+        "name": "Advanced RAG (9 Strategies)",
+        "description": "Módulo RAG avançado com 9 estratégias de recuperação",
+        "strategies": [
+          {"type": "vanilla", "description": "Fluxo básico RAG"},
+          {"type": "memory", "description": "RAG com memória Redis"},
+          {"type": "agentic", "description": "RAG com roteamento dinâmico"},
+          {"type": "graph", "description": "RAG com grafo de conhecimento"},
+          {"type": "hybrid", "description": "RAG híbrido vetorial + grafo"},
+          {"type": "crag", "description": "RAG com validação de qualidade"},
+          {"type": "adaptive", "description": "RAG com estratégia adaptativa"},
+          {"type": "fusion", "description": "RAG-Fusion (RRF)"},
+          {"type": "hyde", "description": "HyDE (Documentos Hipotéticos)"}
+        ],
+        "features": ["semantic_search", "knowledge_graph", "quality_validation", "multi_source"]
+      },
+      "opencode": {
+        "name": "OpenCode Agent",
+        "description": "Multi-model AI coding agent via MCP",
+        "features": ["plan_mode", "model_selection", "multi_ai"]
+      }
+    }
+  }
+}
+
+

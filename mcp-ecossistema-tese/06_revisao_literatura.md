@@ -1,0 +1,165 @@
+# CAPÍTULO 2: FUNDAMENTOS TEÓRICOS E REVISÃO DE LITERATURA
+
+## 2.1 Inteligência Artificial e Sistemas de IA Generativa
+
+### 2.1.1 Evolução dos Modelos de Linguagem de Grande Escala
+
+A evolução dos modelos de linguagem de grande escala (Large Language Models - LLMs) representa uma das transformações mais significativas na história da computação. Desde os primeiros modelos baseados em regras até os atuais sistemas transformer-based, o campo experimentou progressos que redefiniram as possibilidades da interação humano-máquina. Os LLMs representam sistemas de inteligência artificial treinados em vastas quantidades de texto, capazes de compreender, gerar e manipular linguagem natural em níveis que se aproximam da competência humana em diversas tarefas linguísticas (Bommasani et al., 2021).
+
+O desenvolvimento dos LLMs pode ser traced back toearlier milestones in natural language processing. Os primeiros modelos estatísticos de linguagem, como os modelos n-gram, utilizaram abordagens probabilísticas para prever a probabilidade de sequências de palavras. Subsequently, neural network-based approaches emerged, incluindo Word2Vec and GloVe for word embeddings, which represented words as dense vectors in continuous space. The introduction of the Transformer architecture by Vaswani et al. (2017) marked a paradigm shift, enabling models to process sequential data with unprecedented parallelization capabilities through the attention mechanism.
+
+A revolução dos LLMs modernos começou com o lançamento do GPT (Generative Pre-trained Transformer) pela OpenAI em 2018, seguido por successive iterations that increased dramatically in size and capability. O GPT-3, lançado em 2020, com 175 bilhões de parâmetros, demonstrou capacidades emergentes (emergent abilities) que não eram previstas pelos tamanhos dos modelos, incluindo a capacidade de realizar tarefas de raciocínio complexo sem exemplos específicos (few-shot learning). This prompted intense research into scaling laws and the discovery that larger models often exhibit qualitatively different behaviors than smaller ones (Kaplan et al., 2020).
+
+O lançamento do ChatGPT em novembro de 2022 popularizou o uso de LLMs para o público geral, demonstrando a capacidade desses sistemas de manter conversas coerentes, responder a perguntas complexas e realizar uma variedade de tarefas linguísticas. Other major players entered the field, including Google's Bard (now Gemini), Anthropic's Claude, Meta's Llama, and various open-source alternatives. This competition drove rapid innovation in model architectures, training techniques, and application domains.
+
+No contexto brasileiro, a vez que a adoção de LLMs avançados é ainda limitada por fatores como custo computacional e infraestrutura, instituições de pesquisa têm explorado alternativas, incluindo modelos de código aberto e abordagens de fine-tuning para linguagens específicas. A compreensão dos fundamentos técnicos dos LLMs é essencial para avaliar o potencial do MCP como infraestrutura de integração desses sistemas com recursos educacionais e científicos brasileiros.
+
+### 2.1.2 Arquitetura Transformer e Seus Componentes
+
+A arquitetura Transformer, introduzida por Vaswani et al. (2017) no artigo seminal "Attention Is All You Need", representa a base tecnológica para todos os LLMs contemporâneos. Esta arquitetura distingue-se por sua capacidade de processar sequências de dados de forma paralela, utilizando o mecanismo de atenção (attention mechanism) para modelar dependências de longo alcance sem as limitações de recorrência presentes em arquiteturas anteriores como LSTM e GRU.
+
+O componente central da arquitetura Transformer é o mecanismo de auto-atenção (self-attention), que permite que cada elemento de uma sequência attends a todos os outros elementos da mesma sequência, computando uma representação contextualizada que considera as relações entre palavras. A formulação matemática da auto-atenção envolve três vetores derivados de cada elemento de entrada: Query (Q), Key (K) e Value (V). A atenção é calculada como uma função de compatibilidade entre Q e K, normalizada através de softmax, aplicada aos vetores V correspondentes. Esta formulação permite que o modelo weighing the importance of different positions in the sequence when processing each element.
+
+A arquitetura Transformer típica consiste em um encoder e um decoder, embora alguns modelos utilizem apenas uma destas componentes. O encoder processa a sequência de entrada e produz representações latentes, enquanto o decoder generation output sequentially, attending to both the previous outputs and the encoder's representations. A camada de atenção multi-head (multi-head attention) permite que o modelo attend to information from different representation subspaces simultaneously, aumentando sua capacidade de capturar diversos tipos de relações nos dados.
+
+O posicionamento (positional encoding) é adicionado às representações de entrada para fornecer informação sobre a posição dos elementos na sequência, já que a atenção por si só é invariante à posição. Various positional encoding schemes have been proposed, including sinusoidal functions learned embeddings. The residual connections and layer normalization around each sub-layer help stabilize training and enable deeper networks.
+
+A aplicação do conceito de arquitetura Transformer para sistemas MCP representa uma extensão natural desses princípios para o domínio de sistemas multiagentes. A organização em camadas de codificação, coleção, validação, análise, decodificação e controle espelha a lógica de processamento de informação da arquitetura Transformer original, adaptando-a para o contexto de integração de sistemas de IA com fontes de dados e ferramentas externas.
+
+### 2.1.3 Agentes de IA e Sistemas Agentic AI
+
+O conceito de agentes de IA refere-se a sistemas de inteligência artificial capazes de executar ações autonomamente para alcançar objetivos específicos. Diferentemente de sistemas passivos que apenas respondem a prompts, os agentes de IA podem planejar, executar sequências de ações, adaptar-se a Feedback e interagir com o ambiente de forma proativa. A evolução para sistemas Agentic AI representa um salto qualitativo na capacidade de sistemas de IA de executar tarefas complexas de forma autônoma.
+
+Os sistemas Agentic AI são caracterizados pela capacidade de utilizar ferramentas externas, acessar informações atualizadas e manter contexto ao longo de múltiplas interações. O Model Context Protocol foi desenvolvido especificamente para atender a essas necessidades, permitindo que agentes de IA se conectem a servidores que fornecem ferramentas, recursos e dados de forma padronizada. A adoção do MCP por grandes empresas de IA sinaliza uma mudança na arquitetura de sistemas de IA, movendo-se de modelos monolíticos para sistemas distribuídos baseados em agentes.
+
+A arquitetura de sistemas Agentic AI tipicamente envolve componentes como: planejador de tarefas (task planner), que decompõe objetivos em sub-tarefas executáveis; executor de ações (action executor), que interage com ferramentas e sistemas externos; gerenciador de contexto (context manager), que mantém estado e memória ao longo das interações; e módulo de feedback (feedback loop), que avalia resultados e adapta estratégias. O MCP serve como a camada de comunicação que conecta esses componentes a recursos externos de forma padronizada.
+
+No contexto educacional, sistemas Agentic AI podem potencialmente revolucionar a personalização do aprendizado, automatizar tarefas administrativas e fornecer apoio pedagógico personalizado. No entanto, a implementação efetiva desses sistemas requer infraestrutura adequada, incluindo protocolos de comunicação padronizados que garantam interoperabilidade, segurança e confiabilidade. O MCP oferece essa padronização, mas sua adoção em contextos educacionais brasileiros ainda precisa ser investigada, especialmente em regiões com infraestrutura limitada.
+
+## 2.2 Protocolos de Comunicação em Sistemas de IA
+
+### 2.2.1 Do LSP ao MCP: Uma Evolução Necessária
+
+O Language Server Protocol (LSP), desenvolvido pela Microsoft em 2016, estabeleceu um paradigma influential na indústria de desenvolvimento de software. O LSP padroniza a comunicação entre ferramentas de desenvolvimento (como IDEs) e servidores de linguagem (language servers), permitindo que diferentes ferramentas se beneficiem de funcionalidades de análise de código, autocompletar, refatoração e navegação, independentemente da linguagem de programação ou ferramenta específica. O sucesso do LSP demonstrou que padrões abertos podem catalisar inovação e interoperabilidade em ecossistemas de software.
+
+A inspiração do LSP foi fundamental para o desenvolvimento do Model Context Protocol. Os criadores do MCP reconheceram que a integração de modelos de IA com ferramentas e dados externos sofria de problemas similares aos que o LSP resolvia para ferramentas de desenvolvimento: a necessidade de conectores personalizados para cada combinação de modelo e sistema. O MCP propôs uma solução análoga ao LSP, estabelecendo um protocolo padrão para a comunicação entre modelos de IA e recursos externos.
+
+O lançamento do MCP pela Anthropic em novembro de 2024 representou uma resposta à crescente demanda por sistemas de IA que pudessem acessar informações atualizadas, utilizar ferramentas e integrar-se a sistemas existentes. Em menos de um ano, o protocolo foi adotado por praticamente todas as grandes empresas de IA, incluindo OpenAI, Google, Microsoft, Amazon e Meta. Esta adoção quase universal é rara na história da tecnologia e indica um consenso da indústria sobre a necessidade de padronização.
+
+A transferência do MCP para a Agentic AI Foundation, uma organização sem fins lucrativos sob a Linux Foundation, em dezembro de 2025, representou um passo importante para garantir governança neutra e evitar lock-in tecnológico. Esta decisão seguiu o modelo de outros padrões abertos bem-sucedidos e demonstra o compromisso da indústria com a interoperabilidade. Para o contexto educacional brasileiro, esta governança neutra é particularmente importante, pois permite que instituições adaptem o protocolo às suas necessidades específicas sem dependência de fornecedores específicos.
+
+### 2.2.2 Arquitetura do Model Context Protocol
+
+A arquitetura do Model Context Protocol é construída sobre três conceitos fundamentais: servidor (server), cliente (client) e host (host). O servidor MCP é um programa que expõe capacidades (ferramentas, recursos e prompts) através do protocolo; o cliente é a aplicação que se conecta ao servidor para utilizar essas capacidades; e o host é o ambiente onde o modelo de IA opera, que coordena as interações entre clientes e servidores.
+
+A especificação do protocolo define três tipos de capacidades que podem ser expostas por servidores MCP. As ferramentas (tools) são funções invocáveis que o modelo de IA pode chamar para executar ações específicas, como consultar um banco de dados, fazer uma chamada de API ou executar código. Os recursos (resources) são dados estruturados que podem ser lidos pelo modelo, como documentos, configurações ou dados de APIs. Os prompts (prompts) são modelos de interação pré-definidos que orientam o modelo em como utilizar específicas combinações de ferramentas e recursos.
+
+A comunicação no MCP utiliza JSON-RPC 2.0 sobre HTTP ou stdio, permitindo implementação em diversas linguagens de programação. O protocolo define mensagens para descoberta de capacidades, invocação de ferramentas, leitura de recursos e notificação de eventos. Esta simplicidade e neutralidade linguística são características fundamentais que facilitam a adoção e implementação do protocolo em diferentes contextos.
+
+O ecossistema MCP estrutura-se em torno de marketplace-style directories que agregam servidores MCP para diferentes tarefas e domínios. Plataformas como MCP.so oferecem catálogos pesquisáveis de milhares de servidores, permitindo que desenvolvedores encontrem rapidamente soluções para suas necessidades específicas. Esta estrutura de ecossistema aberto стимули innovation and permite que a comunidade contribua com implementações especializadas para diferentes domínios.
+
+### 2.2.3 Componentes Fundamentais do MCP
+
+Os componentes fundamentais do MCP podem ser analisados em múltiplos níveis de abstração. No nível do protocolo, os componentes básicos incluem: specification layer, que define o formato das mensagens e semantics; transport layer, que gerencia a comunicação; capability discovery mechanism, que permite que clientes descubram o que servidores oferecem; e security layer, que endereça autenticação e autorização.
+
+No nível de implementação, os componentes típicos de um servidor MCP incluem: resource handlers, que gerenciam acesso a dados; tool implementations, que encapsulam funcionalidades específicas; prompt templates, que definem padrões de interação; e authentication modules, que controlam acesso. Os clientes MCP tipicamente incluem: connection managers, que gerenciam conexões com servidores; capability browsers, que permitem descobrir e selecionar capacidades; e response processors, que interpretam respostas.
+
+A arquitetura do ecossistema MCP estudado nesta pesquisa apresenta uma organização em camadas que espelha a lógica de processamento de informação de sistemas transformer-based. A camada de Encoder processa intenções do usuário e roteia requisições; a camada de Collection coleta dados de fontes diversas; a camada de Validation verifica autenticidade e consistência; a camada de Analysis realiza processamento especializado; a camada de Decoder gera saídas; e a camada de Control coordena o fluxo overall. Esta organização multi-camada permite que diferentes componentes especializados trabalhem de forma coordenada para processar requisições complexas.
+
+A compreensão destes componentes é fundamental para avaliar o potencial do MCP para aplicações educacionais. A modularidade da arquitetura permite que diferentes organizações adaptem componentes específicos às suas necessidades, enquanto mantêm interoperabilidade com o ecossistema global. Esta flexibilidade é particularmente valiosa para o contexto brasileiro, onde instituições podem necessitar de customizações específicas para integrar com sistemas legados ou atender a requisitos locais.
+
+## 2.3 Ecossistemas de MCP: Servidores e Implementações
+
+### 2.3.1 Servidores MCP Educacionais
+
+O ecossistema de servidores MCP inclui implementações específicas para o domínio educacional que representam oportunidades significativas para a transformação da educação. Servidores MCP educacionais podem fornecer integração com plataformas de aprendizagem como Moodle, Blackboard e Google Classroom; sistemas de gestão acadêmica como Totvs Educacional e academic informação systems; repositórios de conteúdo educacional; e ferramentas de avaliação automatizada.
+
+A tendência emergente no ecossistema MCP educacional inclui o desenvolvimento de clientes especializados para diferentes papéis em instituições de ensino. Interfaces para tutores podem fornecer sugestões pedagógicas, recursos didáticos e análise de desempenho de alunos. Interfaces para secretarias acadêmicas podem automatizar processos de matrícula, emissão de documentos e gestão de informações estudantis. Interfaces para coordenações podem auxiliar no planejamento curricular, alocação de recursos e análise de indicadores de qualidade.
+
+Os padrões de autenticação e autorização para ambientes multiusuário representam uma área de desenvolvimento ativo. A integração com OAuth educacional, sistemas de gerenciamento de identidade institucional e protocolos de segurança de dados educacionais são essenciais para adoção em larga escala. O desenvolvimento de marketplaces de servidores MCP educacionais pode permitir que instituições compartilhem ferramentas e otimizem recursos, criando ecossistemas colaborativos de inovação pedagógica.
+
+A criação de servidores MCP específicos para o contexto brasileiro pode representar uma oportunidade significativa para o desenvolvimento de soluções educacionais adaptadas às necessidades locais. A integração com sistemas como o Moodle, amplamente utilizado em universidades brasileiras, e com bases de dados governamentais como IBGE, INEP e DATASUS pode proporcionar acesso a dados e recursos que atualmente estão subutilizados em muitas instituições de ensino.
+
+### 2.3.2 Integração com Dados Governamentais
+
+A integração de sistemas de IA com dados governamentais representa uma das aplicações mais promissoras do MCP no contexto brasileiro. O Brasil possui uma vasta infraestrutura de dados governamentais, incluindo o IBGE (Instituto Brasileiro de Geografia e Estatística), que mantém bancos de dados demográficos, econômicos e geográficos; o INEP (Instituto Nacional de Estudos e Pesquisas Educacionais), que coleta dados sobre educação; o DATASUS, que mantém informações sobre saúde; e diversos outros órgãos que produzem dados relevantes para pesquisa e política pública.
+
+Os servidores MCP para dados governamentais podem permitir que modelos de IA acessem informações de forma natural, através de consultas em linguagem natural que são traduzidas para queries em APIs específicas. Esta capacidade pode democratizar o acesso a dados governamentais, permitindo que pesquisadores, jornalistas, gestores públicos e cidadãos comuns consultem informações que anteriormente exigiam conhecimento técnico especializado de sistemas de consulta.
+
+No contexto da educação e produção científica, a integração com dados do INEP pode fornecer indicadores sobre escolas, universidades e programas de pós-graduação; dados do IBGE podem contextualizar indicadores educacionais em relação a características demográficas e econômicas; dados do CNPq podem mostrar a produção científica por região e área do conhecimento. O MCP pode servir como a camada de integração que conecta modelos de IA a esses recursos de forma padronizada.
+
+A implementação de servidores MCP para dados governamentais brasileiros enfrenta desafios específicos, incluindo a heterogeneidade dos sistemas de informação governamentais, questões de segurança e privacidade de dados, e a necessidade de atualização frequente das fontes de dados. Namun, os benefícios potenciais em termos de transparência, eficiência da pesquisa e tomada de decisão baseada em evidências justificam o investimento no desenvolvimento dessas integrações.
+
+## 2.4 Impacto das Tecnologias de IA na Educação
+
+### 2.4.1 Perspectivas Globais
+
+O impacto das tecnologias de IA na educação tem sido objeto de intenso debate acadêmico e policymaking em escala global. Pesquisas documentam tanto os Potenciais benefícios quanto os riscos dessas tecnologias para sistemas educacionais. Os benefícios incluem personalização do aprendizado, automação de tarefas administrativas, apoio a professores em tarefas de planejamento e avaliação, e expansão do acesso a recursos educacionais de qualidade. Os riscos incluem aumento de desigualdades, substituição de interações humanas valiosas, viés algorítmico e preocupações com privacidade de dados.
+
+A UNESCO (2023) publicou recomendações sobre a ética da IA na educação, enfatizando a necessidade de abordagem centrada no ser humano que priorize a agência humana, a inclusão e a equidade. O documento destaca que a IA não deve substituir os professores, mas sim capacitá-los; que sistemas de IA devem ser projetados com respeito à diversidade cultural e linguística; e que a privacidade e proteção de dados de estudantes devem ser garantidas.
+
+Estudos empíricos sobre a eficácia de sistemas de IA na educação показыва resultados mistos. Pesquisas sobre tutoring systems baseados em IA demonstram benefícios em alguns contextos, especialmente para habilidades específicas e estudantes com necessidades de aprendizagem diferenciadas. Namun, a generalização desses resultados para diferentes contextos e populações permanece desafiadora. A questão de como integrar efetivamente a IA em práticas pedagógicas estabelecidas continua sendo objeto de investigação.
+
+O Model Context Protocol representa uma infraestrutura que pode facilitar a integração de sistemas de IA em contextos educacionais de forma mais padronizada e escalável. Ao permitir que diferentes modelos de IA se conectem a sistemas educacionais, ferramentas pedagógicas e bases de dados de forma padronizada, o MCP pode reduzir as barreiras técnicas para adoção de tecnologias de IA em instituições educacionais. Namun, a concretização desse potencial depende de fatores como infraestrutura digital, formação de professores e políticas institucionais adequadas.
+
+### 2.4.2 Cenário Brasileiro
+
+O cenário brasileiro de adoção de tecnologias de IA na educação apresenta características específicas que moldam as oportunidades e desafios para implementação do MCP. O Brasil possui um sistema educacional complexo, com mais de 5.000 instituições de ensino superior, mais de 200.000 escolas de educação básica, e uma diversidade de arranjos institucionais que inclui universidades públicas federais, estaduais e municipais, instituições privadas comunitárias, confessionais e mercantis.
+
+A infraestrutura digital das instituições educacionais brasileiras apresenta grande variabilidade. Universities federais e estaduais de grande porte tipicamente possuem infraestrutura robusta, incluindo redes de alta velocidade, data centers e equipes técnicas especializadas. Namun, muitas instituições de ensino superior, especialmente nas regiões menos desenvolvidas, enfrentam limitações significativas de infraestrutura. Nas escolas de educação básica, a situação é ainda mais heterogênea, com muitas escolas sem acesso adequado à internet.
+
+As políticas públicas brasileiras para tecnologia na educação incluem programas como o Programa Nacional de Tecnologia Educacional (PROINFO), que distribuiu equipamentos às escolas públicas; o Programa Banda Larga nas Escolas, que promoveu conectividade; e mais recentemente, o programa de Educação Conectada, que visa universalizar o acesso à internet nas escolas. Namun, a implementação efetiva dessas políticas enfrenta desafios de manutenção, formação de professores e integração pedagógica.
+
+O ecossistema de produção científica brasileiro em IA tem crescido significativamente, posicionando o país entre os líderes mundiais em publicações sobre o tema. Instituições como USP, UNICAMP, UFRJ e UFPE concentram a maior parte da pesquisa em IA no país. A formação de profissionais para o mercado de trabalho em IA também tem se expandido, com novos cursos de graduação e pós-graduação surgindo em diversas instituições. O MCP pode representar uma oportunidade para democratizar o acesso a ferramentas de IA também para instituições com menos recursos.
+
+### 2.4.3 Região Nordeste: Desafios e Oportunidades
+
+A região Nordeste do Brasil apresenta um conjunto específico de desafios e oportunidades para a implementação de tecnologias de IA na educação. Com aproximadamente 57 milhões de habitantes, o Nordeste representa cerca de 27% da população brasileira, mas concentra uma parcela desproporcionalmente baixa da produção científica nacional e dos indicadores de educação superior. As desigualdades regionais dentro do própria região são acentuadas, com áreas metropolitanas apresentando indicadores significativamente melhores que o interior.
+
+Os desafios para implementação de tecnologias de IA no Nordeste incluem: infraestrutura digital limitada, especialmente no interior; acesso desigual a professores qualificados; pesquisadores; baixa taxa de conclusão da educação superior; e histórico de investimentos em ciência e tecnologia inferiores às regiões Sul e Sudeste. A região apresenta, no entanto, características que podem representar oportunidades para implementação de novas tecnologias, incluindo presença de universidades públicas consolidadas, crescente mercado de tecnologia e demanda por inovação em setores estratégicos.
+
+A taxa de acesso à internet no Nordeste, embora tenha crescido significativamente na última década, permanece abaixo da média nacional. O interior da região, onde se localizam municípios como Crateús, apresenta conectividade ainda mais limitada, com muitos locais dependendo de conexões via satélite ou rádio que apresentam latência e limitação de banda. Estas condições de infraestrutura representam desafios significativos para a implementação de soluções que dependem de conectividade constante, como muitas aplicações de IA baseadas em nuvem.
+
+O potencial do MCP para o Nordeste reside na possibilidade de implementação de soluções que possam operar de forma eficiente mesmo com conectividade limitada. A arquitetura modular do ecossistema MCP permite que componentes sejam instalados localmente e sincronizados periodicamente com servidores centrais, reduzindo a dependência de conectividade constante. Esta característica pode ser particularmente valiosa para instituições educacionais em áreas com conectividade instável ou limitada.
+
+## 2.5 Produção Científica e Tecnologias de IA no Brasil
+
+### 2.5.1 Indicadores de Produção Científica
+
+A produção científica brasileira tem apresentado crescimento expressivo nas últimas décadas, com o país se consolidando entre os 15 maiores produtores mundiais de artigos científicos. Os dados do Web of Science e Scopus indicam que o Brasil publicava cerca de 50.000 artigos por ano em 2020, representando aproximadamente 2% da produção científica mundial. Este crescimento reflete investimentos significativos em pós-graduação e pesquisa, especialmente após a criação do Programa Nacional de Pós-Graduação (PNPG) e a expansão do sistema de pós-graduação stricto sensu.
+
+A distribuição regional da produção científica brasileira é, no entanto, altamente desigual. A região Sudeste, particularmente o estado de São Paulo, concentra mais de 40% da produção científica nacional. A região Nordeste, apesar de representar mais de um quarto da população brasileira, responde por aproximadamente 15% da produção científica. Esta disparidade reflete diferenças históricas em investimento em infraestrutura de pesquisa, disponibilidade de programas de pós-graduação e disponibilidade de pesquisadores qualificados.
+
+Os indicadores de pós-graduação no Brasil mostram crescimento significativo nas últimas décadas, com o país alcanzando mais de 6.000 programas de mestrado e doutorado reconhecidos pela CAPES. A distribuição dos programas entre as regiões reflete as desigualdades históricas, com São Paulo concentrando aproximadamente 20% do total de programas. Os programas de pós-graduação em áreas relacionadas à IA concentram-se principalmente em instituições do Sudeste e Sul do país.
+
+A integração de tecnologias de IA nos processos de pesquisa representa uma oportunidade para reduzir desigualdades na produção científica. Ferramentas de IA podem Auxiliar em atividades como revisão de literatura, análise de dados, escrita científica e tradução. O MCP, ao padronizar a integração de modelos de IA com ferramentas e dados de pesquisa, pode democratizar o acesso a essas capacidades para pesquisadores em instituições com menos recursos.
+
+### 2.5.2 Políticas de Incentivo à Pesquisa
+
+O sistema brasileiro de incentivo à pesquisa científica é composto por múltiplos atores e instrumentos de política pública. No nível federal, os principais órgãos de fomento são o CNPq (Conselho Nacional de Desenvolvimento Científico e Tecnológico), que financia bolsas de pesquisa e programas de iniciação científica; a CAPES (Coordenação de Aperfeiçoamento de Pessoal de Nível Superior), que avalia programas de pós-graduação e financia bolsas; e a FINEP (Financiadora de Estudos e Projetos), que financia projetos de pesquisa e inovação.
+
+As políticas de ciência, tecnologia e inovação no Brasil têm passado por transformações significativas nas últimas décadas, incluindo a criação do Ministério da Ciência, Tecnologia e Inovação (MCTI), a implementação do Plano Nacional de Ciência, Tecnologia e Inovação (PNCTI), e mais recentemente, a Estratégia Nacional de Inteligência Artificial (ENAI). A ENAI, lançada em 2021, estabelece diretrizes para o desenvolvimento e uso de IA no país, incluindo atenção à inclusão e redução de desigualdades.
+
+Os programas de políticas de inclusão científica, como o Programa Ciência na Escola e programas de ações afirmativas na pós-graduação, têm buscado reduzir desigualdades no acesso à educação científica. A expansão de programas de pós-graduação para o interior do país, através de unidades avançadas de universidades federais, representa uma estratégia para democratizar o acesso à formação de alto nível.
+
+O potencial do MCP paraapoiar as políticas de incentivo à pesquisa reside na capacidade de conectar pesquisadores a ferramentas e dados de forma eficiente. A integração com bases de dados de literatura científica, repositórios de dados de pesquisa e ferramentas de análise pode Potencializar o impacto dos investimentos em pesquisa. O desenvolvimento de servidores MCP específicos para o contexto brasileiro pode ampliar o acesso a essas capacidades para pesquisadores em instituições de menor porte.
+
+### 2.5.3 O Papel das ICTs na Formação de Pesquisadores
+
+As Instituições de Ciência e Tecnologia (ICTs) desempenham papel central na formação de pesquisadores no Brasil. As universidades públicas, em especial as federais, respondem pela maior parte da produção científica nacional e da formação de mestres e doutores. Os Institutos Federais de Educação, Ciência e Tecnologia (IFs), criados a partir de 2008, representam uma nova modalidade de ICTs com foco em educação profissional e tecnológica, que tem se expandido significativamente para o interior do país.
+
+A formação de pesquisadores em áreas relacionadas à IA tem se expandido, com programas de pós-graduação específicos surgindo em diversas instituições. A Área de Ciência da Computação, avaliada pela CAPES, inclui múltiplos programas com pesquisa em IA, machine learning e áreas relacionadas. A área interdisciplinar também tem crescido, com programas que abordam aplicações de IA em diferentes domínios, incluindo educação, saúde e ciências sociais.
+
+O papel dos IFs na formação de pesquisadores em regiões menos desenvolvidas é particularmente relevante. Os IFs possuem missions específica de promoção do desenvolvimento regional, com presença em todos os estados brasileiros e frequente localização em municípios do interior. A recente criação de programas de pós-graduação stricto sensu nos IFs representa uma oportunidade para democratizar o acesso à formação de alto nível em regiões como o Sertão nordestino.
+
+A integração de tecnologias de IA nos processos de formação de pesquisadores pode Potencializar a capacidade das ICTs em regiões menos desenvolvidas. Ferramentas de IA podem Auxiliar em atividades de pesquisa, permitir acesso a recursos computacionais avançados e conectar pesquisadores a redes de colaboração. O MCP, ao padronizar essas integrações, pode reduzir as barreiras técnicas para que pesquisadores em instituições menores acessem capacidades avançadas de IA.
+
+## Síntese do Capítulo
+
+Este capítulo apresentou os fundamentos teóricos e a revisão de literatura que sustentam a presente pesquisa. A discussão sobre inteligência artificial e sistemas de IA generativa estabeleceu o contexto tecnológico no qual o MCP se insere, highlighting a evolução dos modelos de linguagem de grande escala e a emergência de sistemas agentic AI. A análise da arquitetura Transformer forneceu a base conceitual para compreender a organização em camadas do ecossistema MCP estudado.
+
+A revisão dos protocolos de comunicação em sistemas de IA demonstrou a evolução do LSP para o MCP como uma resposta necessária às demandas de interoperabilidade em sistemas de IA modernos. A descrição da arquitetura e componentes fundamentais do MCP estabeleceu o vocabulário técnico necessário para as análises subsequentes. A discussão sobre ecossistemas de MCP, incluindo servidores educacionais e integrações com dados governamentais, identificou as aplicações mais relevantes para o contexto brasileiro.
+
+A revisão do impacto das tecnologias de IA na educação, tanto em perspectiva global quanto no cenário brasileiro e nordestino, evidenciou as oportunidades e desafios específicos do contexto nacional. A análise dos indicadores de produção científica e das políticas de incentivo à pesquisa revelou as desigualdades regionais que caracterizam o sistema brasileiro de ciência e tecnologia. O papel das ICTs na formação de pesquisadores foi identificado como central para qualquer estratégia de redução de desigualdades.
+
+Os elementos apresentados neste capítulo fundamentam a formulação das hipóteses de pesquisa e orientam o desenvolvimento da metodologia de investigação. A compreensão do potencial do MCP para contribuir com a democratização do acesso à educação e à produção científica no Brasil, especialmente em regiões historicamente marginalizadas, será o foco das análises nos próximos capítulos.

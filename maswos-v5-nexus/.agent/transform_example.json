@@ -1,0 +1,100 @@
+{
+  "transformacao_exemplo": {
+    "requisito": "Desenvolver API REST completa com autenticação JWT, banco de dados PostgreSQL e documentação OpenAPI",
+    "rede_transformadora": {
+      "agentes_ativados": [
+        {
+          "agente": "backend-specialist",
+          "capacidades": ["rest_api", "jwt_authentication", "endpoint_design"],
+          "skills_injetadas": ["api-patterns", "nodejs-best-practices"],
+          "granularidade": "endpoint_level"
+        },
+        {
+          "agente": "database-architect",
+          "capacidades": ["schema_design", "migration_strategy", "query_optimization"],
+          "skills_injetadas": ["database-design", "prisma-expert"],
+          "granularidade": "table_level"
+        },
+        {
+          "agente": "security-auditor",
+          "capacidades": ["jwt_analysis", "vulnerability_scanning", "security_headers"],
+          "skills_injetadas": ["vulnerability-scanner", "red-team-tactics"],
+          "granularidade": "vulnerability_level"
+        },
+        {
+          "agente": "documentation-writer",
+          "capacidades": ["openapi_spec", "api_documentation", "examples"],
+          "skills_injetadas": ["documentation-templates"],
+          "granularidade": "endpoint_documentation"
+        }
+      ],
+      "comunicacao_rede": {
+        "topologia": "isonômica",
+        "protocolo": "peer_to_peer",
+        "granularidade_comunicacao": "function_level",
+        "timeout": "100ms"
+      },
+      "mcp_servers_utilizados": [
+        {
+          "servidor": "academic",
+          "uso": "Pesquisar melhores práticas de JWT e OpenAPI"
+        },
+        {
+          "servidor": "maswos",
+          "uso": "Verificar padrões de API em dados governamentais"
+        }
+      ]
+    },
+    "resultado_esperado": {
+      "qualidade": "production_ready",
+      "precisao": 0.98,
+      "cobertura": "100% dos requisitos",
+      "entregaveis": [
+        "API REST completa com endpoints documentados",
+        "Autenticação JWT implementada e auditada",
+        "Banco de dados PostgreSQL com schema otimizado",
+        "Documentação OpenAPI interativa",
+        "Testes automatizados para todos os endpoints"
+      ]
+    }
+  },
+  "transformacao_granular": {
+    "exemplo_1": {
+      "capacidade": "rest_api_design",
+      "granularidade": "endpoint_level",
+      "agentes_envolvidos": ["backend-specialist"],
+      "skills_necessarias": ["api-patterns"],
+      "resultado": "Design de 5 endpoints RESTful"
+    },
+    "exemplo_2": {
+      "capacidade": "jwt_implementation",
+      "granularidade": "function_level",
+      "agentes_envolvidos": ["backend-specialist", "security-auditor"],
+      "skills_necessarias": ["nodejs-best-practices", "vulnerability-scanner"],
+      "resultado": "Implementação segura de JWT com refresh tokens"
+    },
+    "exemplo_3": {
+      "capacidade": "database_schema",
+      "granularidade": "table_level",
+      "agentes_envolvidos": ["database-architect"],
+      "skills_necessarias": ["database-design"],
+      "resultado": "Schema de 3 tabelas com relaciones otimizadas"
+    }
+  },
+  "rede_isonomica": {
+    "propriedades": {
+      "hierarquia": "plana (todos iguais)",
+      "comunicacao": "direta peer-to-peer",
+      "transformacao": "dinamica e sob demanda",
+      "granularidade": "cirurgica (precisa)",
+      "resiliencia": "alta (tolerante a falhas)"
+    },
+    "vantagens": [
+      "Flexibilidade total na orquestração",
+      "Transformação granular de capacidades",
+      "Precisão cirúrgica na execução",
+      "Escalabilidade horizontal ilimitada",
+      "Resiliência natural da rede"
+    ]
+  }
+}

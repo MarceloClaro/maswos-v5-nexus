@@ -1,0 +1,32 @@
+{
+  "data_coleta": "2026-03-22T14:17:32.424673",
+  "fontes": [
+    "World Bank API v2",
+    "OECD PISA (pré-coletado)"
+  ],
+  "indicadores": [
+    "NY.GDP.PCAP.PP.KD",
+    "NY.GDP.PCAP.KD",
+    "SE.PRM.ENRR",
+    "SE.SEC.ENRR",
+    "SE.TER.ENRR",
+    "SE.XPD.TOTL.GD.ZS",
+    "GB.XPD.RSDV.GD.ZS",
+    "SP.URB.TOTL.IN.ZS",
+    "SP.POP.TOTL",
+    "SL.UEM.TOTL.ZS",
+    "SE.ADT.LITR.ZS"
+  ],
+  "paises": [
+    "BRA",
+    "MEX",
+    "TUR",
+    "CHN",
+    "IND",
+    "KOR",
+    "MYS"
+  ],
+  "periodo": "1960-2023",
+  "total_registros": 448,
+  "arquivo_csv": "dataset_mit_educacao_PRIMARIO.csv"
+}

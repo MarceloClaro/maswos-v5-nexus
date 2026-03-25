@@ -1,0 +1,545 @@
+{
+  "name": "maswos-academic-geospatial",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - MCP Acadêmico de Geoprocessamento com técnicas osgeopy/pygeoprocessing",
+  "source_reference": {
+    "osgeopy": "https://github.com/cgarrard/osgeopy-code",
+    "pygeoprocessing": "https://github.com/natcap/pygeoprocessing",
+    "rasterio": "https://rasterio.readthedocs.io"
+  },
+  "architecture": {
+    "transformer_mapping": true,
+    "layers": ["Encoder", "Collection", "Validation", "Analysis", "Synthesis", "Output"],
+    "quality_gates": ["G0", "G1", "G2", "G3", "G4", "GF"],
+    "map_types": [
+      "choropleth",
+      "heatmap",
+      "topographic",
+      "geological",
+      "hydrological",
+      "mineral",
+      "satellite",
+      "land_use"
+    ]
+  },
+  "agents": {
+    "raster_processing": [
+      {
+        "id": "GEO01",
+        "name": "NDVIAgent",
+        "layer": "Analysis",
+        "description": "Calcula NDVI (Normalized Difference Vegetation Index)",
+        "formula": "(NIR - Red) / (NIR + Red)",
+        "satellites": ["Landsat", "Sentinel", "MODIS"],
+        "reference": "osgeopy Chapter 10"
+      },
+      {
+        "id": "GEO02",
+        "name": "NDWIAgent",
+        "layer": "Analysis",
+        "description": "Calcula NDWI (Normalized Difference Water Index)",
+        "formula": "(Green - NIR) / (Green + NIR)",
+        "applications": ["detecção de água", "monitoramento de inundações"],
+        "reference": "osgeopy Chapter 10"
+      },
+      {
+        "id": "GEO03",
+        "name": "RasterCalculatorAgent",
+        "layer": "Analysis",
+        "description": "Calculadora raster com operações personalizadas",
+        "operations": ["add", "subtract", "multiply", "divide", "power", "log", "exp", "sin", "cos"],
+        "reference": "pygeoprocessing.raster_calculator"
+      },
+      {
+        "id": "GEO04",
+        "name": "RasterReclassifyAgent",
+        "layer": "Analysis",
+        "description": "Reclassifica valores de raster",
+        "use_cases": ["reclassificar uso do solo", "categorizar declividade"],
+        "reference": "pygeoprocessing.reclassify_raster"
+      },
+      {
+        "id": "GEO05",
+        "name": "RasterResampleAgent",
+        "layer": "Analysis",
+        "description": "Reamostra raster para nova resolução",
+        "methods": ["near", "bilinear", "cubic", "lanczos"],
+        "reference": "pygeoprocessing.warp_raster"
+      },
+      {
+        "id": "GEO06",
+        "name": "SlopeCalculatorAgent",
+        "layer": "Analysis",
+        "description": "Calcula declividade (slope) de DEM",
+        "units": ["degree", "percent"],
+        "z_factor": "correção de unidades",
+        "reference": "pygeoprocessing.calculate_slope"
+      },
+      {
+        "id": "GEO07",
+        "name": "AspectCalculatorAgent",
+        "layer": "Analysis",
+        "description": "Calcula aspecto (exposição) de DEM",
+        "output": "0-360 graus",
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO08",
+        "name": "ContourGeneratorAgent",
+        "layer": "Synthesis",
+        "description": "Gera curvas de nível de DEM",
+        "interval": "intervalo entre curvas (metros)",
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO09",
+        "name": "HillshadeGeneratorAgent",
+        "layer": "Synthesis",
+        "description": "Gera hillshade (sombras de terreno)",
+        "parameters": ["azimuth", "altitude", "z_factor"],
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO10",
+        "name": "TINGeneratorAgent",
+        "layer": "Synthesis",
+        "description": "Gera TIN (Triangulated Irregular Network) de pontos",
+        "reference": "osgeopy Chapter 9"
+      }
+    ],
+    "vector_processing": [
+      {
+        "id": "GEO11",
+        "name": "BufferAgent",
+        "layer": "Analysis",
+        "description": "Cria buffers (zonas de amortecimento) вокруг объектов",
+        "dissolve": "opcional para dissolver buffers sobrepostos",
+        "reference": "osgeopy Chapter 6"
+      },
+      {
+        "id": "GEO12",
+        "name": "SpatialJoinAgent",
+        "layer": "Analysis",
+        "description": "Realiza junção espacial entre camadas",
+        "predicates": ["intersects", "within", "contains", "touches"],
+        "reference": "osgeopy Chapter 7"
+      },
+      {
+        "id": "GEO13",
+        "name": "ClipAgent",
+        "layer": "Analysis",
+        "description": "Recorta camada vetorial por máscara",
+        "reference": "osgeopy Chapter 6"
+      },
+      {
+        "id": "GEO14",
+        "name": "UnionAgent",
+        "layer": "Analysis",
+        "description": "Une geometrias sobrepostas",
+        "reference": "osgeopy Chapter 6"
+      },
+      {
+        "id": "GEO15",
+        "name": "IntersectAgent",
+        "layer": "Analysis",
+        "description": "Extrai interseção de geometrias",
+        "reference": "osgeopy Chapter 6"
+      },
+      {
+        "id": "GEO16",
+        "name": "DifferenceAgent",
+        "layer": "Analysis",
+        "description": "Calcula diferença entre geometrias",
+        "reference": "osgeopy Chapter 6"
+      },
+      {
+        "id": "GEO17",
+        "name": "RasterizeAgent",
+        "layer": "Synthesis",
+        "description": "Rasteriza camada vetorial",
+        "burn_values": "valores para queimar",
+        "all_touched": "incluir células tocadas",
+        "reference": "pygeoprocessing.rasterize"
+      },
+      {
+        "id": "GEO18",
+        "name": "ZonalStatisticsAgent",
+        "layer": "Analysis",
+        "description": "Calcula estatísticas zonais (média, soma, etc.)",
+        "statistics": ["mean", "sum", "min", "max", "std"],
+        "reference": "pygeoprocessing.zonal_statistics"
+      },
+      {
+        "id": "GEO19",
+        "name": "PointInterpolationAgent",
+        "layer": "Analysis",
+        "description": "Interpola valores de pontos para raster",
+        "methods": ["IDW", "kriging", "nearest", "linear"],
+        "reference": "osgeopy Chapter 9"
+      },
+      {
+        "id": "GEO20",
+        "name": "VoronoiAgent",
+        "layer": "Synthesis",
+        "description": "Gera diagramas de Voronoi",
+        "reference": "osgeopy Chapter 9"
+      }
+    ],
+    "hydrology": [
+      {
+        "id": "HYD01",
+        "name": "FillPitsAgent",
+        "layer": "Analysis",
+        "description": "Preenche depressões em DEM",
+        "reference": "pygeoprocessing.routing.fill_pits"
+      },
+      {
+        "id": "HYD02",
+        "name": "FlowDirectionD8Agent",
+        "layer": "Analysis",
+        "description": "Calcula direção de fluxo D8",
+        "method": "maior declive",
+        "reference": "pygeoprocessing.routing.flow_dir_d8"
+      },
+      {
+        "id": "HYD03",
+        "name": "FlowDirectionMFDAgent",
+        "layer": "Analysis",
+        "description": "Calcula direção de fluxo MFD (múltiplas direções)",
+        "reference": "pygeoprocessing.routing.flow_dir_mfd"
+      },
+      {
+        "id": "HYD04",
+        "name": "FlowAccumulationAgent",
+        "layer": "Analysis",
+        "description": "Calcula acumulação de fluxo",
+        "weight_raster": "opcional para ponderação",
+        "reference": "pygeoprocessing.routing.flow_accumulation_d8"
+      },
+      {
+        "id": "HYD05",
+        "name": "WatershedDelimitationAgent",
+        "layer": "Synthesis",
+        "description": "Delimita bacias hidrográficas",
+        "pour_points": "pontos de derramamento",
+        "reference": "pygeoprocessing.routing.extract_watershed"
+      },
+      {
+        "id": "HYD06",
+        "name": "StreamDefinitionAgent",
+        "layer": "Analysis",
+        "description": "Define rede de drenagem",
+        "threshold": "área mínima de contribuição",
+        "reference": "osgeopy Chapter 12"
+      },
+      {
+        "id": "HYD07",
+        "name": "ChannelDistanceAgent",
+        "layer": "Analysis",
+        "description": "Calcula distância até canal",
+        "reference": "pygeoprocessing.routing.distance_to_channel_mfd"
+      },
+      {
+        "id": "HYD08",
+        "name": "StreamOrderAgent",
+        "layer": "Analysis",
+        "description": "Ordena Strahler da rede de drenagem",
+        "reference": "osgeopy Chapter 12"
+      }
+    ],
+    "satellite_imagery": [
+      {
+        "id": "SAT01",
+        "name": "SentinelProcessAgent",
+        "layer": "Collection",
+        "description": "Processa imagens Sentinel-2",
+        "bands": ["B02", "B03", "B04", "B08", "B11", "B12"],
+        "corrections": ["atmosférica", "topográfica"],
+        "reference": "osgeopy Chapter 10"
+      },
+      {
+        "id": "SAT02",
+        "name": "LandsatProcessAgent",
+        "layer": "Collection",
+        "description": "Processa imagens Landsat 8/9",
+        "bands": ["B1-B11", "QA"],
+        "indices": ["NDVI", "EVI", "NBR"],
+        "reference": "osgeopy Chapter 10"
+      },
+      {
+        "id": "SAT03",
+        "name": "ImageCompositeAgent",
+        "layer": "Synthesis",
+        "description": "Cria composição colorida de bandas",
+        "combinations": {
+          "RGB_Natural": ["B04", "B03", "B02"],
+          "RGB_Falsa": ["B08", "B04", "B03"],
+          "NDVI": "composite"
+        },
+        "reference": "osgeopy Chapter 10"
+      },
+      {
+        "id": "SAT04",
+        "name": "ImageClassificationAgent",
+        "layer": "Analysis",
+        "description": "Classifica uso do solo",
+        "methods": ["supervised", "unsupervised", "object-based"],
+        "classifiers": ["Maximum Likelihood", "Random Forest", "SVM"],
+        "reference": "osgeopy Chapter 13"
+      },
+      {
+        "id": "SAT05",
+        "name": "ChangeDetectionAgent",
+        "layer": "Analysis",
+        "description": "Detecta mudanças entre imagens",
+        "methods": ["post-classification", "image differencing", "PCA"],
+        "reference": "osgeopy Chapter 13"
+      },
+      {
+        "id": "SAT06",
+        "name": "BandMathAgent",
+        "layer": "Analysis",
+        "description": "Calcula índices customizados de bandas",
+        "custom_formulas": "expressões matemáticas",
+        "reference": "pygeoprocessing.raster_calculator"
+      }
+    ],
+    "geological": [
+      {
+        "id": "GEO21",
+        "name": "GeologicalMapAgent",
+        "layer": "Synthesis",
+        "description": "Gera mapa geológico de formações",
+        "legend": "legenda de litologias",
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO22",
+        "name": "LithologyClassifierAgent",
+        "layer": "Analysis",
+        "description": "Classifica litologias de DEM",
+        "parameters": ["declividade", "altitude", "geologia"],
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO23",
+        "name": "FaultLineAgent",
+        "layer": "Analysis",
+        "description": "Extrai lineamentos estruturais",
+        "filters": ["canny", "sobel"],
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "GEO24",
+        "name": "MineralIndexAgent",
+        "layer": "Analysis",
+        "description": "Calcula índice de mineralização",
+        "indices": ["ASTER", "OLI", "SWIR"],
+        "reference": "osgeopy Chapter 13"
+      }
+    ],
+    "topographic": [
+      {
+        "id": "TOP01",
+        "name": "DEMGeneratorAgent",
+        "layer": "Synthesis",
+        "description": "Gera DEM de curvas de nível",
+        "resolution": "resolução do pixel",
+        "reference": "osgeopy Chapter 9"
+      },
+      {
+        "id": "TOP02",
+        "name": "TopographicPositionAgent",
+        "layer": "Analysis",
+        "description": "Classifica posição topográfica",
+        "classes": ["vale", "encosta inferior", "encosta média", "encosta superior", "crista"],
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "TOP03",
+        "name": "RuggednessIndexAgent",
+        "layer": "Analysis",
+        "description": "Calcula índice de rugosidade",
+        "window_size": "tamanho da janela de análise",
+        "reference": "osgeopy Chapter 11"
+      },
+      {
+        "id": "TOP04",
+        "name": "ViewshedAgent",
+        "layer": "Analysis",
+        "description": "Calcula área visível de um ponto",
+        "observer": "coordenadas do observador",
+        "reference": "osgeopy Chapter 11"
+      }
+    ],
+    "map_generation": [
+      {
+        "id": "MAP01",
+        "name": "ChoroplethMapAgent",
+        "layer": "Output",
+        "description": "Gera mapa coroplético",
+        "normalization": "por área, por população, absoluto",
+        "classification": ["quantile", "jenks", "equal_interval"],
+        "reference": "osgeopy Chapter 8"
+      },
+      {
+        "id": "MAP02",
+        "name": "HeatmapAgent",
+        "layer": "Output",
+        "description": "Gera mapa de calor",
+        "radius": "raio de influência",
+        "weight_field": "campo de peso",
+        "reference": "osgeopy Chapter 8"
+      },
+      {
+        "id": "MAP03",
+        "name": "CartographicComposerAgent",
+        "layer": "Output",
+        "description": "Compõe mapa cartográfico completo",
+        "elements": ["título", "legenda", "escala", "direção norte", "grade"],
+        "reference": "osgeopy Chapter 8"
+      },
+      {
+        "id": "MAP04",
+        "name": "LayoutAgent",
+        "layer": "Output",
+        "description": "Cria layout de múltiplos mapas",
+        "grids": ["1x1", "2x2", "1x2", "2x1"],
+        "reference": "osgeopy Chapter 8"
+      }
+    ],
+    "coordinate_systems": [
+      {
+        "id": "CRS01",
+        "name": "ReprojectRasterAgent",
+        "layer": "Analysis",
+        "description": "Reprojeta raster para novo CRS",
+        "target_crs": "código EPSG ou WKT",
+        "reference": "pygeoprocessing.warp_raster"
+      },
+      {
+        "id": "CRS02",
+        "name": "ReprojectVectorAgent",
+        "layer": "Analysis",
+        "description": "Reprojeta vetor para novo CRS",
+        "reference": "pygeoprocessing.reproject_vector"
+      },
+      {
+        "id": "CRS03",
+        "name": "AlignRastersAgent",
+        "layer": "Analysis",
+        "description": "Alinha rasters geoespacialmente",
+        "methods": ["union", "intersection"],
+        "reference": "pygeoprocessing.align_and_resize_raster_stack"
+      }
+    ]
+  },
+  "map_types": {
+    "choropleth": {
+      "description": "Mapa temático com cores por valor",
+      "agents": ["MAP01", "GEO18", "CRS01"]
+    },
+    "heatmap": {
+      "description": "Mapa de densidade/calor",
+      "agents": ["MAP02", "GEO12"]
+    },
+    "topographic": {
+      "description": "Mapa topográfico com curvas de nível",
+      "agents": ["GEO08", "GEO09", "TOP01", "MAP03"]
+    },
+    "geological": {
+      "description": "Mapa geológico de formações",
+      "agents": ["GEO21", "GEO22", "GEO23"]
+    },
+    "hydrological": {
+      "description": "Mapa hidrológico de bacias",
+      "agents": ["HYD01", "HYD02", "HYD05", "HYD08"]
+    },
+    "mineral": {
+      "description": "Mapa de mineralização",
+      "agents": ["GEO24", "SAT04", "SAT06"]
+    },
+    "satellite": {
+      "description": "Mapa de sensoriamento remoto",
+      "agents": ["SAT01", "SAT02", "SAT03", "SAT04"]
+    },
+    "land_use": {
+      "description": "Mapa de uso e cobertura do solo",
+      "agents": ["GEO01", "SAT04", "GEO18", "MAP01"]
+    }
+  },
+  "satellite_sources": {
+    "sentinel": {
+      "name": "Sentinel Hub",
+      "url": "https://scihub.copernicus.eu",
+      "bands": {
+        "Sentinel-2": ["B01-B12", "QA60"]
+      },
+      "resolution": "10-60m"
+    },
+    "landsat": {
+      "name": "USGS",
+      "url": "https://earthexplorer.usgs.gov",
+      "bands": {
+        "Landsat 8/9": ["B1-B11", "QA"]
+      },
+      "resolution": "15-30m"
+    },
+    "modis": {
+      "name": "NASA LP DAAC",
+      "url": "https://lpdaac.usgs.gov",
+      "bands": ["NDVI", "EVI", "LST"],
+      "resolution": "250-1000m"
+    }
+  },
+  "geological_datasets": {
+    "cprm": {
+      "name": "CPRM - Serviço Geológico do Brasil",
+      "url": "https://www.cprm.gov.br",
+      "data_types": ["geologia", "recursos minerais", "hidrogeologia"]
+    },
+    "sgdc": {
+      "name": "Sistema Geológico de Defesa Civil",
+      "url": "https://www.defesacivil.gov.br",
+      "data_types": ["risco geológico", "zona de risco"]
+    }
+  },
+  "quality_gates": {
+    "G0": {"threshold": 1.0},
+    "G1": {"threshold": 0.80, "agents": ["GEO01-GEO10", "SAT01-SAT06"]},
+    "G2": {"threshold": 0.85, "agents": ["GEO11-GEO20", "HYD01-HYD08"]},
+    "G3": {"threshold": 0.90, "agents": ["GEO21-GEO24", "TOP01-TOP04"]},
+    "G4": {"threshold": 0.95, "agents": ["MAP01-MAP04", "CRS01-CRS03"]},
+    "GF": {"threshold": 0.99}
+  },
+  "dependencies": {
+    "python_packages": [
+      "pygeoprocessing>=2.4.8",
+      "rasterio>=1.3",
+      "geopandas>=0.14",
+      "shapely>=2.0",
+      "fiona>=1.9",
+      "gdal>=3.6",
+      "numpy>=1.24",
+      "scipy>=1.10"
+    ],
+    "osgeopy_module": "https://github.com/cgarrard/osgeopy-code/raw/master/ospybook-latest.zip"
+  },
+  "examples": {
+    "ndvi_calculation": {
+      "description": "Calcular NDVI de imagem Landsat",
+      "steps": ["SAT02", "GEO01", "MAP01"],
+      "code": "import pygeoprocessing as pgp\\n\\ndef calculate_ndvi(nir_path, red_path, output_path):\\n    def ndvi_op(nir, red):\\n        return (nir - red) / (nir + red)\\n    pgp.raster_calculator([(nir_path, 1), (red_path, 1)], ndvi_op, output_path, pgp.GDT_Float32, -9999)"
+    },
+    "watershed_delineation": {
+      "description": "Delimitar bacia hidrográfica",
+      "steps": ["HYD01", "HYD02", "HYD04", "HYD05"],
+      "code": "fill_pits -> flow_dir_d8 -> flow_accumulation -> extract_watershed"
+    },
+    "land_use_classification": {
+      "description": "Classificar uso do solo",
+      "steps": ["SAT01", "GEO01", "SAT04", "MAP01"],
+      "code": "Sentinel-2 -> NDVI -> supervised classification -> choropleth map"
+    }
+  }
+}

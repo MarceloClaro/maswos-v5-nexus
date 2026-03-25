@@ -1,0 +1,30 @@
+{
+  "name": "maswos-sync-complement",
+  "version": "1.0.0",
+  "description": "Complementary MCP to sync maswos-mcp with ecosystem-transformer",
+  "agents": [
+    {
+      "id": "query_builder",
+      "name": "Query Builder",
+      "layer": "Encoder",
+      "description": "Constrói queries otimizadas para busca em múltiplas fontes",
+      "capabilities": ["query_optimization", "semantic_search", "cross_source_query"]
+    },
+    {
+      "id": "skill_synthesizer",
+      "name": "Skill Synthesizer",
+      "layer": "Decoder",
+      "description": "Sintetiza e compila componentes de skill em estrutura otimizada",
+      "capabilities": ["skill_synthesis", "component_integration", "optimization"]
+    }
+  ],
+  "sync_target": {
+    "source": "ecosystem-transformer",
+    "target": "maswos-mcp",
+    "missing_agents": ["query_builder", "skill_synthesizer"]
+  },
+  "alignment": {
+    "constraint_checker": "Validation",
+    "critic_router": "Control"
+  }
+}

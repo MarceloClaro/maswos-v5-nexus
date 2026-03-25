@@ -1,0 +1,449 @@
+{
+  "name": "maswos-v5-nexus-dist",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - Distribuição completa com arquitetura Transformer-Agentes",
+  "sync_timestamp": "2026-03-22T00:00:00Z",
+  "architecture": {
+    "transformer_mapping": true,
+    "total_agents": 120,
+    "mcps_integrated": 4,
+    "quality_gates": [
+      "G0",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "GF"
+    ],
+    "tier_system": [
+      "MAGNUM",
+      "STANDARD",
+      "EXPRESS"
+    ],
+    "rag_protocol": "3_AXES"
+  },
+  "mcp_status": {
+    "maswos-juridico": {
+      "status": "active",
+      "agents": 38,
+      "config": "maswos-juridico-config.json",
+      "last_update": "2026-03-22",
+      "quality_metrics": {
+        "precision": 0.9875,
+        "convergence": 1.0,
+        "oab_compliance": 0.958,
+        "traceability": 1.0
+      }
+    },
+    "maswos-mcp": {
+      "status": "active",
+      "agents": 15,
+      "config": "maswos-mcp-config.json",
+      "last_update": "2026-03-22",
+      "features": [
+        "skill_generation",
+        "tier_routing",
+        "agent_factory",
+        "critic_router"
+      ]
+    },
+    "ecosystem-transformer": {
+      "status": "active",
+      "agents": 10,
+      "config": "ecosystem-transformer-config.json",
+      "last_update": "2026-03-22",
+      "capabilities": [
+        "cross_mcp_orchestration",
+        "intent_routing",
+        "result_aggregation",
+        "mcp_status_monitoring"
+      ]
+    },
+    "academic": {
+      "status": "active",
+      "agents": 35,
+      "config": "maswos-academic-config.json",
+      "last_update": "2026-03-22",
+      "features": [
+        "paper_generation",
+        "qualis_validation",
+        "dataset_collection",
+        "geospatial_analysis"
+      ]
+    }
+  },
+  "synchronization_plan": {
+    "add_to_maswos_juridico": [
+      {
+        "id": "TS1",
+        "name": "Jurista Supremo PhD Summa",
+        "layer": "Meta"
+      },
+      {
+        "id": "TS2",
+        "name": "Gerente Supremo Federal",
+        "layer": "Meta"
+      },
+      {
+        "id": "CO1-CO4",
+        "name": "Coordenadores",
+        "layer": "Meta"
+      },
+      {
+        "id": "A01",
+        "name": "AuditReportGenerator",
+        "layer": "Synthesis"
+      }
+    ],
+    "add_to_maswos_mcp": [
+      {
+        "id": "N02",
+        "name": "Query Builder",
+        "layer": "Encoder"
+      },
+      {
+        "id": "A06",
+        "name": "Skill Synthesizer",
+        "layer": "Decoder"
+      }
+    ],
+    "add_to_ecosystem": [
+      {
+        "id": "orchestrator_unified",
+        "name": "Orchestrator Unificado",
+        "layer": "Input"
+      },
+      {
+        "id": "cross_mcp_query",
+        "name": "Cross-MCP Query",
+        "layer": "Routing"
+      },
+      {
+        "id": "result_aggregator",
+        "name": "Result Aggregator",
+        "layer": "Aggregation"
+      }
+    ],
+    "add_to_academic": [
+      {
+        "id": "TA1",
+        "name": "Reitor Supremo PhD Summa",
+        "layer": "Meta"
+      },
+      {
+        "id": "TA2",
+        "name": "Diretor de Pesquisa",
+        "layer": "Meta"
+      },
+      {
+        "id": "CA1-CA4",
+        "name": "Coordenadores",
+        "layer": "Meta"
+      },
+      {
+        "id": "A01-A26",
+        "name": "Pipeline Completo",
+        "layer": "All"
+      }
+    ]
+  },
+  "layer_alignment": {
+    "maswos_juridico": {
+      "Encoder": [
+        "N01",
+        "N02",
+        "N03"
+      ],
+      "Collection": [
+        "N04",
+        "N05",
+        "N06",
+        "N07",
+        "N08",
+        "N09",
+        "N10",
+        "N11",
+        "N12",
+        "N12_integrated_scraper"
+      ],
+      "Validation": [
+        "N13",
+        "N14",
+        "N15"
+      ],
+      "Analysis": [
+        "N16",
+        "N17",
+        "N18",
+        "N19",
+        "N20"
+      ],
+      "Synthesis": [
+        "N21",
+        "N22",
+        "N23"
+      ],
+      "Output": [
+        "N24",
+        "N25",
+        "N26"
+      ],
+      "Meta": [
+        "TS1",
+        "TS2",
+        "CO1",
+        "CO2",
+        "CO3",
+        "CO4"
+      ]
+    },
+    "maswos_mcp": {
+      "Encoder": [
+        "N01_intent_parser",
+        "N02_query_builder",
+        "N03_rag_builder"
+      ],
+      "Validation": [
+        "constraint_checker",
+        "multi_validator"
+      ],
+      "AgentFactory": [
+        "domain_analyzer",
+        "scope_mapper",
+        "agent_factory_core"
+      ],
+      "Decoder": [
+        "skill_assembler",
+        "06_skill_synthesizer",
+        "critic_router"
+      ],
+      "Control": [
+        "critic_router"
+      ]
+    },
+    "ecosystem_transformer": {
+      "Input": [
+        "orchestrator_unified"
+      ],
+      "Routing": [
+        "intent_router",
+        "cross_mcp_query"
+      ],
+      "Validation": [
+        "cross_mcp_validator"
+      ],
+      "Aggregation": [
+        "result_aggregator",
+        "mcp_status_monitor"
+      ]
+    },
+    "academic": {
+      "Encoder": [
+        "A01",
+        "A02",
+        "A03"
+      ],
+      "Collection": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12"
+      ],
+      "Validation": [
+        "A13",
+        "A14",
+        "A15"
+      ],
+      "Analysis": [
+        "A16",
+        "A17",
+        "A18",
+        "A19",
+        "A20"
+      ],
+      "Synthesis": [
+        "A21",
+        "A22",
+        "A23"
+      ],
+      "Output": [
+        "A24",
+        "A25",
+        "A26"
+      ],
+      "Meta": [
+        "TA1",
+        "TA2",
+        "CA1",
+        "CA2",
+        "CA3",
+        "CA4"
+      ]
+    }
+  },
+  "cross_mcp_protocols": {
+    "juridico_petition": {
+      "mcp_sequence": [
+        "maswos-juridico"
+      ],
+      "required_agents": [
+        "N01",
+        "N03",
+        "N13",
+        "N14",
+        "N21",
+        "N25"
+      ],
+      "quality_threshold": 0.95
+    },
+    "skill_generation": {
+      "mcp_sequence": [
+        "maswos-mcp"
+      ],
+      "required_agents": [
+        "N01_intent_parser",
+        "domain_analyzer",
+        "scope_mapper",
+        "agent_factory_core",
+        "skill_assembler"
+      ],
+      "tier_routing": true
+    },
+    "academic_research": {
+      "mcp_sequence": [
+        "academic"
+      ],
+      "required_agents": [
+        "A01",
+        "A04",
+        "A13",
+        "A16",
+        "A21",
+        "A25"
+      ],
+      "quality_threshold": 0.9
+    },
+    "cross_mcp_workflow": {
+      "mcp_sequence": [
+        "maswos-juridico",
+        "maswos-mcp",
+        "academic"
+      ],
+      "use_cases": [
+        "legal_research_with_skill_generation",
+        "academic_research_with_legal_validation",
+        "comprehensive_research_with_generation"
+      ]
+    }
+  },
+  "handoff_protocols": {
+    "required_fields": [
+      "session_id",
+      "agent_source",
+      "agent_target",
+      "mcp_source",
+      "mcp_target",
+      "timestamp",
+      "context",
+      "quality_score",
+      "audit_trail"
+    ],
+    "cross_mcp_fields": [
+      "mcp_context",
+      "intermediate_results",
+      "partial_outputs"
+    ]
+  },
+  "files_created": [
+    "maswos-juridico-config.json",
+    "maswos-mcp-config.json",
+    "ecosystem-transformer-config.json",
+    "maswos-academic-config.json",
+    "SKILL.md",
+    "geospatial_pipeline.py",
+    "rag_validation.py",
+    "api_validator.py",
+    "templates.md",
+    "mcp_sync_state_final.json",
+    "api_validation_report.json",
+    "VALIDATION_REPORT.md"
+  ],
+  "next_steps": [
+    "Corrigir endpoints de API (LexML, STJ)",
+    "Implementar retry para STF com SSL fallback",
+    "Configurar mirror alternativo para IBGE",
+    "Executar testes de integração cross-MCP",
+    "Implementar health checks periódicos"
+  ],
+  "validation": {
+    "timestamp": "2026-03-22T09:23:19",
+    "scripts": {
+      "geospatial_pipeline.py": {
+        "syntax": "OK",
+        "execution": "OK",
+        "quality_score": 0.95
+      },
+      "rag_validation.py": {
+        "syntax": "OK",
+        "execution": "OK",
+        "hallucination_risk": 0.035
+      },
+      "api_validator.py": {
+        "syntax": "OK",
+        "execution": "OK",
+        "apis_tested": 14
+      }
+    },
+    "apis": {
+      "total": 14,
+      "available": 12,
+      "unavailable": 2,
+      "availability_rate": 0.8571,
+      "by_type": {
+        "juridico": {
+          "total": 4,
+          "available": 3
+        },
+        "governamental": {
+          "total": 5,
+          "available": 4
+        },
+        "academico": {
+          "total": 5,
+          "available": 5
+        }
+      }
+    },
+    "quality_gates": {
+      "G0": {
+        "threshold": 1.0,
+        "status": "OK"
+      },
+      "G1": {
+        "threshold": 0.8,
+        "status": "OK"
+      },
+      "G2": {
+        "threshold": 0.85,
+        "status": "OK"
+      },
+      "G3": {
+        "threshold": 0.9,
+        "status": "OK"
+      },
+      "G4": {
+        "threshold": 0.95,
+        "status": "OK"
+      },
+      "GF": {
+        "threshold": 0.99,
+        "status": "OK"
+      }
+    }
+  }
+}

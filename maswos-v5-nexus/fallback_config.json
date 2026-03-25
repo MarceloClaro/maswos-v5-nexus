@@ -1,0 +1,27 @@
+{
+  "fallback_strategies": {
+    "STF": {
+      "primary": "portal.stf.jus.br",
+      "fallbacks": [
+        "transparencia.stf.jus.br",
+        "sistemas.stf.jus.br/repgeral",
+        "cache_local"
+      ],
+      "cache_ttl": 3600
+    },
+    "IBGE": {
+      "primary": "servicodados.ibge.gov.br/api/v1",
+      "fallbacks": [
+        "apisidra.ibge.gov.br",
+        "censo.ibge.gov.br",
+        "cache_local"
+      ],
+      "cache_ttl": 86400
+    }
+  },
+  "retry_policy": {
+    "max_retries": 3,
+    "backoff_factor": 1.5,
+    "initial_delay": 1.0
+  }
+}

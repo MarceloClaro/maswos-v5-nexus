@@ -1,0 +1,222 @@
+{
+  "name": "maswos-mcp",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - Skill Generator com arquitetura Transformer-Agentes e TIER System",
+  "architecture": {
+    "transformer_mapping": true,
+    "layers": ["Encoder", "Validation", "AgentFactory", "Decoder", "Control"],
+    "quality_gates": ["G0", "G1", "G2", "G3", "GF"],
+    "tier_system": {
+      "TIER_1_MAGNUM": {
+        "min_score": 60,
+        "agents": 60,
+        "layers": "all",
+        "rag_axes": 3
+      },
+      "TIER_2_STANDARD": {
+        "min_score": 30,
+        "agents": 45,
+        "layers": ["Encoder", "Collection", "Validation", "Analysis", "Output"],
+        "rag_axes": 2
+      },
+      "TIER_3_EXPRESS": {
+        "min_score": 0,
+        "agents": 30,
+        "layers": ["Encoder", "Validation", "Synthesis"],
+        "rag_axes": 1
+      }
+    },
+    "actor_critic_loop": true,
+    "critic_router": true
+  },
+  "agents": {
+    "encoder": [
+      {
+        "id": "N01_intent_parser",
+        "name": "Intent Parser",
+        "layer": "Encoder",
+        "transformer_mapping": "Input Embedding",
+        "description": "Parseia intent do usuário e extrai domínio, tier e parâmetros",
+        "capabilities": ["intent_detection", "entity_extraction", "domain_mapping"]
+      },
+      {
+        "id": "N02_query_builder",
+        "name": "Query Builder",
+        "layer": "Encoder",
+        "transformer_mapping": "Positional Encoding",
+        "description": "Constrói queries otimizadas para busca em múltiplas fontes",
+        "capabilities": ["query_optimization", "semantic_search", "cross_source_query"]
+      },
+      {
+        "id": "N03_rag_builder",
+        "name": "RAG Builder",
+        "layer": "Encoder",
+        "transformer_mapping": "Encoder Stack",
+        "description": "Constrói índice RAG para busca contextual",
+        "capabilities": ["rag_indexing", "context_retrieval", "blueprint_generation"]
+      }
+    ],
+    "validation": [
+      {
+        "id": "constraint_checker",
+        "name": "Constraint Checker",
+        "layer": "Validation",
+        "transformer_mapping": "Layer Normalization",
+        "description": "Valida constraints técnicos e de compliance para o skill",
+        "checks": ["technical_feasibility", "compliance", "resource_requirements"]
+      },
+      {
+        "id": "multi_validator",
+        "name": "Multi-Validator",
+        "layer": "Validation",
+        "description": "Validação multi-dimensional",
+        "dimensions": ["technical", "legal", "quality", "performance"]
+      }
+    ],
+    "agent_factory": [
+      {
+        "id": "domain_analyzer",
+        "name": "Domain Analyzer",
+        "layer": "AgentFactory",
+        "transformer_mapping": "Feed-Forward",
+        "description": "Analisa domínio e stakeholders",
+        "outputs": ["stakeholders", "regulations", "kpis"]
+      },
+      {
+        "id": "scope_mapper",
+        "name": "Scope Mapper",
+        "layer": "AgentFactory",
+        "transformer_mapping": "Multi-Head Attention",
+        "description": "Mapeia features e agentes baseado no tier",
+        "tier_configs": {
+          "TIER_1": {"features": "30+", "agents": "60+"},
+          "TIER_2": {"features": "15-30", "agents": "45"},
+          "TIER_3": {"features": "5-15", "agents": "30"}
+        }
+      },
+      {
+        "id": "agent_factory_core",
+        "name": "Agent Factory",
+        "layer": "AgentFactory",
+        "transformer_mapping": "Residual Connection",
+        "description": "Gera código de agentes",
+        "capabilities": ["code_generation", "agent_instantiation", "capability_assignment"]
+      }
+    ],
+    "decoder": [
+      {
+        "id": "skill_assembler",
+        "name": "Skill Assembler",
+        "layer": "Decoder",
+        "transformer_mapping": "Decoder Stack",
+        "description": "Compila SKILL.md completo",
+        "outputs": ["SKILL.md", "agent_configs", "workflows"]
+      },
+      {
+        "id": "06_skill_synthesizer",
+        "name": "Skill Synthesizer",
+        "layer": "Decoder",
+        "description": "Sintetiza e compila componentes de skill",
+        "capabilities": ["skill_synthesis", "component_integration", "optimization"]
+      },
+      {
+        "id": "critic_router",
+        "name": "Critic-Router",
+        "layer": "Decoder",
+        "transformer_mapping": "Self-Attention",
+        "description": "Avalia qualidade e decide próximo passo no pipeline",
+        "quality_threshold": 0.95,
+        "actions": ["proceed", "retry", "escalate"]
+      }
+    ],
+    "control": [
+      {
+        "id": "critic_router",
+        "name": "Critic-Router",
+        "layer": "Control",
+        "transformer_mapping": "Self-Attention",
+        "description": "Avalia qualidade e decide próximo passo no pipeline",
+        "quality_threshold": 0.95,
+        "actions": ["proceed", "retry", "escalate"]
+      }
+    ]
+  },
+  "pipeline": {
+    "stages": [
+      {
+        "id": "G0",
+        "name": "Início",
+        "agents": ["N01_intent_parser"],
+        "threshold": 1.0,
+        "output": "Intent parseada"
+      },
+      {
+        "id": "G1",
+        "name": "Análise",
+        "agents": ["domain_analyzer", "N02_query_builder"],
+        "threshold": 0.80,
+        "output": "Domínio analisado"
+      },
+      {
+        "id": "G2",
+        "name": "Validação",
+        "agents": ["constraint_checker", "multi_validator"],
+        "threshold": 0.85,
+        "output": "Constraints validados"
+      },
+      {
+        "id": "G3",
+        "name": "Geração",
+        "agents": ["scope_mapper", "agent_factory_core"],
+        "threshold": 0.90,
+        "output": "Agentes gerados"
+      },
+      {
+        "id": "GF",
+        "name": "Final",
+        "agents": ["skill_assembler", "06_skill_synthesizer", "critic_router"],
+        "threshold": 0.95,
+        "output": "SKILL.md compilado"
+      }
+    ]
+  },
+  "tier_calculation": {
+    "formula": "complexity_score = type_score + (entities × 3) + (conflicts × 15) + (jurisdictions × 5)",
+    "type_scores": {
+      "tese": 40,
+      "dissertacao": 35,
+      "artigo": 25,
+      "parecer": 20,
+      "peticao": 10,
+      "recurso": 15
+    },
+    "classification": {
+      "TIER_1_MAGNUM": "complexity_score >= 60",
+      "TIER_2_STANDARD": "complexity_score >= 30",
+      "TIER_3_EXPRESS": "complexity_score < 30"
+    }
+  },
+  "domains": [
+    "academic",
+    "business",
+    "legal",
+    "medical",
+    "financial",
+    "educational",
+    "devops",
+    "creative",
+    "general"
+  ],
+  "handoff_protocol": {
+    "required_fields": ["session_id", "agent_source", "agent_target", "timestamp", "context", "quality_score", "audit_trail"],
+    "validations": ["context_integrity", "threshold_compliance", "audit_log"]
+  },
+  "critic_criteria": {
+    "dimensions": [
+      {"name": "Completude", "weight": 0.25, "threshold": 0.90},
+      {"name": "Coerência", "weight": 0.25, "threshold": 0.90},
+      {"name": "Exequibilidade", "weight": 0.25, "threshold": 0.85},
+      {"name": "Compliance", "weight": 0.25, "threshold": 0.95}
+    ]
+  }
+}

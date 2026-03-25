@@ -1,0 +1,213 @@
+{
+  "timestamp": "2026-03-22T16:42:38.469527",
+  "summary": {
+    "total_apis": 17,
+    "available": 13,
+    "unavailable": 4,
+    "availability_rate": 76.47
+  },
+  "by_type": {
+    "juridico": {
+      "total": 4,
+      "available": 1
+    },
+    "governamental": {
+      "total": 5,
+      "available": 4
+    },
+    "academico": {
+      "total": 8,
+      "available": 8
+    }
+  },
+  "results": [
+    {
+      "name": "LexML",
+      "scraper_id": "N05",
+      "type": "juridico",
+      "status_code": 404,
+      "available": false,
+      "latency_ms": 496.13,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "STF",
+      "scraper_id": "N06",
+      "type": "juridico",
+      "status_code": 403,
+      "available": false,
+      "latency_ms": 264.14,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "STJ",
+      "scraper_id": "N07",
+      "type": "juridico",
+      "status_code": 404,
+      "available": false,
+      "latency_ms": 451.26,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "TJ-CE",
+      "scraper_id": "N08",
+      "type": "juridico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 748.97,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "IBGE",
+      "scraper_id": "N09",
+      "type": "governamental",
+      "status_code": 0,
+      "available": false,
+      "latency_ms": null,
+      "error": "Connection error: HTTPSConnectionPool(host='servicos.ibge.gov.br', port=443): Max retries exceeded with url: /geoserver/publico/wms (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000001F69F2F5950>: Failed to resolve 'servicos.ibge.gov.br' ([Errno 11001] getaddrinfo failed)\"))",
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "INEP",
+      "scraper_id": "N10",
+      "type": "governamental",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 439.44,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "CNJ",
+      "scraper_id": "N11",
+      "type": "governamental",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 565.31,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "IPEA",
+      "scraper_id": "A11",
+      "type": "governamental",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 364.68,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "Dados.gov.br",
+      "scraper_id": "N/A",
+      "type": "governamental",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 408.66,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "arXiv",
+      "scraper_id": "A04",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 47.68,
+      "error": null,
+      "scraping_fallback": true,
+      "fallback_technique": "cache"
+    },
+    {
+      "name": "CrossRef",
+      "scraper_id": "A05",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 594.1,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "OpenAlex",
+      "scraper_id": "A06",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 742.18,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    },
+    {
+      "name": "PubMed",
+      "scraper_id": "A07",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 1.43,
+      "error": null,
+      "scraping_fallback": true,
+      "fallback_technique": "cache"
+    },
+    {
+      "name": "Europe PMC",
+      "scraper_id": "A08",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 0.94,
+      "error": null,
+      "scraping_fallback": true,
+      "fallback_technique": "cache"
+    },
+    {
+      "name": "Semantic Scholar",
+      "scraper_id": "A09",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 60773.73,
+      "error": null,
+      "scraping_fallback": true,
+      "fallback_technique": "semanticscholar_empty"
+    },
+    {
+      "name": "DOAJ",
+      "scraper_id": "A10",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 520.45,
+      "error": null,
+      "scraping_fallback": true,
+      "fallback_technique": "doaj_api"
+    },
+    {
+      "name": "CORE",
+      "scraper_id": "A11",
+      "type": "academico",
+      "status_code": 200,
+      "available": true,
+      "latency_ms": 2312.14,
+      "error": null,
+      "scraping_fallback": false,
+      "fallback_technique": null
+    }
+  ],
+  "fallbacks_used": 5
+}

@@ -1,0 +1,381 @@
+{
+  "name": "maswos-academic",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - MCP Acadêmico Brasileiro com arquitetura Transformer-Agentes",
+  "architecture": {
+    "transformer_mapping": true,
+    "layers": ["Encoder", "Collection", "Validation", "Analysis", "Synthesis", "Output"],
+    "quality_gates": ["G0", "G1", "G2", "G3", "G4", "GF"],
+    "tier_system": ["TIER_1_MAGNUM", "TIER_2_STANDARD", "TIER_3_EXPRESS"],
+    "rag_protocol": "3_AXES",
+    "actor_critic_loop": true,
+    "critic_router": true
+  },
+  "agents": {
+    "tribunal_academico": [
+      {
+        "id": "TA1",
+        "name": "Reitor Supremo PhD Summa",
+        "stars": 5,
+        "layer": "Meta",
+        "dimensions": [
+          "fundamentacao_teorica",
+          "metodologia",
+          "qualidade_argumentativa",
+          "estado_arte",
+          "contribuicao_original",
+          "redacao_cientifica",
+          "completude"
+        ],
+        "thresholds": {
+          "fundamentacao_teorica": 0.95,
+          "metodologia": 0.98,
+          "qualidade_argumentativa": 0.90,
+          "estado_arte": 0.95,
+          "contribuicao_original": 0.90,
+          "redacao_cientifica": 0.95,
+          "completude": 0.95
+        }
+      },
+      {
+        "id": "TA2",
+        "name": "Diretor de Pesquisa PhD",
+        "stars": 4,
+        "layer": "Meta",
+        "description": "Coordena pesquisa de alta complexidade acadêmica"
+      }
+    ],
+    "coordenacao": [
+      {"id": "CA1", "name": "Coordenador de Pesquisa", "layer": "Meta"},
+      {"id": "CA2", "name": "Coordenador de Validação", "layer": "Meta"},
+      {"id": "CA3", "name": "Coordenador de Metodologia", "layer": "Meta"},
+      {"id": "CA4", "name": "Coordenador de Publicação", "layer": "Meta"}
+    ],
+    "encoder": [
+      {
+        "id": "A01",
+        "name": "Research Intent Parser",
+        "layer": "Encoder",
+        "transformer_mapping": "Input Embedding",
+        "intents": ["artigo", "tese", "dissertacao", "monografia", "pesquisa", "revisao"]
+      },
+      {
+        "id": "A02",
+        "name": "Scope Classifier",
+        "layer": "Encoder",
+        "transformer_mapping": "Positional Encoding",
+        "scopes": ["national", "international", "regional"]
+      },
+      {
+        "id": "A03",
+        "name": "Methodology Planner",
+        "layer": "Encoder",
+        "transformer_mapping": "Encoder Stack",
+        "types": ["qualitativa", "quantitativa", "mista"]
+      }
+    ],
+    "collection": [
+      {
+        "id": "A04",
+        "name": "arXivScraper",
+        "source": "export.arxiv.org",
+        "data_type": "Preprints",
+        "update_rate": "daily"
+      },
+      {
+        "id": "A05",
+        "name": "CrossRefScraper",
+        "source": "api.crossref.org",
+        "data_type": "Referências",
+        "update_rate": "real-time"
+      },
+      {
+        "id": "A06",
+        "name": "OpenAlexScraper",
+        "source": "api.openalex.org",
+        "data_type": "Citations, FWCI",
+        "update_rate": "weekly"
+      },
+      {
+        "id": "A07",
+        "name": "PubMedScraper",
+        "source": "eutils.ncbi.nlm.nih.gov",
+        "data_type": "Biomedicina",
+        "update_rate": "daily"
+      },
+      {
+        "id": "A08",
+        "name": "SciELOScraper",
+        "source": "scielo.org",
+        "data_type": "Literatura brasileira",
+        "update_rate": "monthly"
+      },
+      {
+        "id": "A09",
+        "name": "CAPESScraper",
+        "source": "periodicos.capes.gov.br",
+        "data_type": "Periódicos Qualis",
+        "update_rate": "semiannual"
+      },
+      {
+        "id": "A10",
+        "name": "IBGEScraper",
+        "source": "ibge.gov.br",
+        "data_type": "Dados demográficos",
+        "update_rate": "annual"
+      },
+      {
+        "id": "A11",
+        "name": "IPEADataScraper",
+        "source": "ipeadata.gov.br",
+        "data_type": "Dados econômicos",
+        "update_rate": "monthly"
+      },
+      {
+        "id": "A12",
+        "name": "DATASUSScrapeer",
+        "source": "datasus.saude.gov.br",
+        "data_type": "Dados de saúde",
+        "update_rate": "monthly"
+      }
+    ],
+    "validation": [
+      {
+        "id": "A13",
+        "name": "PaperValidator",
+        "layer": "Validation",
+        "transformer_mapping": "Layer Normalization",
+        "checks": ["methodology", "ethics", "plagiarism"]
+      },
+      {
+        "id": "A14",
+        "name": "CitationValidator",
+        "layer": "Validation",
+        "patterns": ["ABNT", "APA", "IEEE"]
+      },
+      {
+        "id": "A15",
+        "name": "SourceAuthenticator",
+        "layer": "Validation",
+        "qualis_checks": true
+      }
+    ],
+    "analysis": [
+      {
+        "id": "A16",
+        "name": "MethodologyAnalyzer",
+        "layer": "Analysis",
+        "approaches": ["dedutivo", "indutivo", "abdutivo"]
+      },
+      {
+        "id": "A17",
+        "name": "LiteratureReviewAnalyzer",
+        "layer": "Analysis",
+        "types": ["sistematica", "narrativa", "integrativa"]
+      },
+      {
+        "id": "A18",
+        "name": "StatisticalAnalyzer",
+        "layer": "Analysis"
+      },
+      {
+        "id": "A19",
+        "name": "GeospatialAnalyzer",
+        "layer": "Analysis"
+      },
+      {
+        "id": "A20",
+        "name": "DatasetQualityAnalyzer",
+        "layer": "Analysis"
+      }
+    ],
+    "synthesis": [
+      {
+        "id": "A21",
+        "name": "AcademicSynthesizer",
+        "layer": "Synthesis",
+        "transformer_mapping": "Decoder Stack",
+        "formats": ["article", "thesis", "dissertation", "monograph"]
+      },
+      {
+        "id": "A22",
+        "name": "ReferencesGenerator",
+        "layer": "Synthesis"
+      },
+      {
+        "id": "A23",
+        "name": "AuditReportGenerator",
+        "layer": "Synthesis"
+      }
+    ],
+    "output": [
+      {
+        "id": "A24",
+        "name": "CriticRouter",
+        "layer": "Output",
+        "transformer_mapping": "Self-Attention"
+      },
+      {
+        "id": "A25",
+        "name": "ComplianceChecker",
+        "layer": "Output",
+        "standards": ["ABNT", "Qualis", "Capes"]
+      },
+      {
+        "id": "A26",
+        "name": "QualityScorer",
+        "layer": "Output",
+        "transformer_mapping": "Output Projection",
+        "final_threshold": 0.99
+      }
+    ]
+  },
+  "rag_protocol": {
+    "eixo_1_fundacional": {
+      "description": "Literatura clássica e seminal (>10 anos)",
+      "sources": ["monografias_classicas", "tratados", "obras_referencia"]
+    },
+    "eixo_2_estado_arte": {
+      "description": "Literatura recente (3-5 anos)",
+      "sources": ["artigos_recentes", "preprints", "conferencias"]
+    },
+    "eixo_3_metodologica": {
+      "description": "Literatura técnica sobre métodos",
+      "sources": ["metodologia_cientifica", "estatistica", "epistemologia"]
+    }
+  },
+  "qualis_system": {
+    "strata": ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "B5", "C"],
+    "minimum_for_publication": "B5",
+    "validation": true
+  },
+  "templates": {
+    "article": {
+      "name": "Template Artigo Científico",
+      "qualis_target": "A1",
+      "min_pages": 30,
+      "sections": ["Resumo", "Introdução", "Metodologia", "Resultados", "Discussão", "Conclusão", "Referências"]
+    },
+    "thesis": {
+      "name": "Template Tese",
+      "qualis_target": "A1",
+      "min_pages": 110,
+      "sections": ["Resumo", "Abstract", "Introdução", "Fundamentação Teórica", "Metodologia", "Resultados", "Discussão", "Conclusão", "Referências", "Apêndices"]
+    },
+    "dissertation": {
+      "name": "Template Dissertação",
+      "qualis_target": "A2",
+      "min_pages": 60,
+      "sections": ["Resumo", "Abstract", "Introdução", "Referencial", "Metodologia", "Resultados", "Discussão", "Conclusão", "Referências"]
+    },
+    "monograph": {
+      "name": "Template Monografia",
+      "qualis_target": "B1",
+      "min_pages": 30,
+      "sections": ["Resumo", "Introdução", "Desenvolvimento", "Conclusão", "Referências"]
+    }
+  },
+  "datasets": {
+    "national": [
+      {"id": "ibge", "name": "IBGE", "description": "Dados demográficos e geográficos"},
+      {"id": "ipeadata", "name": "IPEA", "description": "Dados econômicos e sociais"},
+      {"id": "datasus", "name": "DATASUS", "description": "Dados de saúde"},
+      {"id": "sidra", "name": "SIDRA/IBGE", "description": "Banco de dados agregados"},
+      {"id": "capes", "name": "CAPES", "description": "Periódicos acadêmicos"}
+    ],
+    "international": [
+      {"id": "arxiv", "name": "arXiv", "description": "Preprints multidisciplinar"},
+      {"id": "crossref", "name": "CrossRef", "description": "Referências bibliográficas"},
+      {"id": "openalex", "name": "OpenAlex", "description": "Citations e metadados"},
+      {"id": "pubmed", "name": "PubMed", "description": "Biomedicina e ciências da saúde"},
+      {"id": "kaggle", "name": "Kaggle", "description": "Datasets diversos"}
+    ],
+    "government": [
+      {"id": "dadosgov", "name": "Dados.gov.br", "description": "Dados abertos do governo federal"},
+      {"id": "brasil_api", "name": "Brasil API", "description": "APIs de serviços públicos"},
+      {"id": "receita_federal", "name": "Receita Federal", "description": "Dados fiscais e aduaneiros"},
+      {"id": "tcu", "name": "TCU", "description": "Dados de fiscalização"}
+    ]
+  },
+  "geospatial": {
+    "implementation": "geo_agents.py",
+    "source_reference": {
+      "osgeopy": "https://github.com/cgarrard/osgeopy-code",
+      "pygeoprocessing": "https://github.com/natcap/pygeoprocessing"
+    },
+    "capabilities": [
+      "choropleth_maps",
+      "heatmap_generation",
+      "topographic_maps",
+      "geological_maps",
+      "hydrological_maps",
+      "satellite_imagery",
+      "land_use_classification",
+      "buffer_analysis",
+      "spatial_join",
+      "interpolation",
+      "network_analysis",
+      "accessibility_analysis",
+      "ndvi_calculation",
+      "ndwi_calculation",
+      "watershed_delineation",
+      "slope_aspect_analysis",
+      "contour_generation",
+      "hillshade_generation",
+      "viewshed_analysis"
+    ],
+    "agents": {
+      "raster_processing": ["GEO01", "GEO02", "GEO03", "GEO04", "GEO05", "GEO06", "GEO07", "GEO08", "GEO09", "GEO10"],
+      "vector_processing": ["GEO11", "GEO12", "GEO13", "GEO14", "GEO15", "GEO16", "GEO17", "GEO18", "GEO19", "GEO20"],
+      "hydrology": ["HYD01", "HYD02", "HYD03", "HYD04", "HYD05", "HYD06", "HYD07", "HYD08"],
+      "satellite_imagery": ["SAT01", "SAT02", "SAT03", "SAT04", "SAT05", "SAT06"],
+      "geological": ["GEO21", "GEO22", "GEO23", "GEO24"],
+      "topographic": ["TOP01", "TOP02", "TOP03", "TOP04"],
+      "map_generation": ["MAP01", "MAP02", "MAP03", "MAP04"],
+      "coordinate_systems": ["CRS01", "CRS02", "CRS03"]
+    },
+    "workflows": [
+      "ndvi_calculation",
+      "ndwi_calculation",
+      "slope_analysis",
+      "watershed_delineation",
+      "topographic_map",
+      "land_use_analysis"
+    ],
+    "datasets": [
+      {"id": "ibge_mapas", "name": "Mapas IBGE", "format": "shp/geojson"},
+      {"id": "sentinel", "name": "Sentinel Satellite", "format": "tiff"},
+      {"id": "landsat", "name": "Landsat", "format": "tiff"},
+      {"id": "cprm", "name": "CPRM Geologia", "format": "shp"},
+      {"id": "sgdc", "name": "Defesa Civil", "format": "shp"}
+    ]
+  },
+  "quality_gates": {
+    "G0": {"threshold": 1.0, "agents": ["orchestrator"]},
+    "G1": {"threshold": 0.80, "agents": ["A04-A12"]},
+    "G2": {"threshold": 0.85, "agents": ["A13-A15"]},
+    "G3": {"threshold": 0.90, "agents": ["A16-A20"]},
+    "G4": {"threshold": 0.95, "agents": ["A21-A23"]},
+    "GF": {"threshold": 0.99, "agents": ["A24-A26"]}
+  },
+  "actor_critic": {
+    "max_iterations": 10,
+    "dimensions": [
+      {"name": "Originalidade", "threshold": 0.90, "weight": 0.25},
+      {"name": "Metodologia", "threshold": 0.95, "weight": 0.25},
+      {"name": "Fundamentação", "threshold": 0.90, "weight": 0.20},
+      {"name": "Redação", "threshold": 0.95, "weight": 0.15},
+      {"name": "Qualis Alignment", "threshold": 1.0, "weight": 0.15}
+    ]
+  },
+  "handoff_protocol": {
+    "required_fields": ["session_id", "agent_source", "agent_target", "timestamp", "context", "quality_score", "audit_trail"],
+    "validations": ["context_integrity", "threshold_compliance", "audit_log"]
+  },
+  "metrics": {
+    "qualis_target": "A1",
+    "min_qualis": "B5",
+    "plagiarism_threshold": 0.10,
+    "citation_quality_threshold": 0.80
+  }
+}

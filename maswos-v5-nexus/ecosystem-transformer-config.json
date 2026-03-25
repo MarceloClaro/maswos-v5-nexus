@@ -1,0 +1,743 @@
+{
+  "name": "ecosystem-transformer",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - Cross-MCP Orchestration com arquitetura Transformer",
+  "architecture": {
+    "transformer_mapping": true,
+    "mcp_registry": {
+      "maswos-juridico": {
+        "agents": 60,
+        "domains": ["legal"],
+        "layers": ["Encoder", "Collection", "Validation", "Analysis", "Synthesis", "Output"]
+      },
+      "maswos-mcp": {
+        "agents": 15,
+        "domains": ["skill-generation"],
+        "layers": ["Encoder", "Validation", "AgentFactory", "Decoder", "Control"]
+      },
+      "academic": {
+        "agents": 55,
+        "domains": ["academic", "research", "data_collection", "document_rag"],
+        "layers": ["Encoder", "Collection", "Validation", "Analysis", "Synthesis", "Output"],
+        "scrapers": [
+          {"id": "A04", "name": "arXiv", "type": "academic", "papers": "2M+"},
+          {"id": "A05", "name": "PubMed/NCBI", "type": "biomedical", "papers": "35M+"},
+          {"id": "A06", "name": "Semantic Scholar", "type": "academic", "papers": "200M+"},
+          {"id": "A07", "name": "DOAJ", "type": "journals", "journals": "21K+"},
+          {"id": "A08", "name": "CORE", "type": "academic", "papers": "300M+"},
+          {"id": "A09", "name": "OpenAlex", "type": "academic", "papers": "250M+"},
+          {"id": "A10", "name": "Europe PMC", "type": "biomedical", "papers": "37M+"},
+          {"id": "A11", "name": "AMiner", "type": "academic_china", "papers": "300M+"},
+          {"id": "A12", "name": "OpenReview", "type": "ai_conferences", "venues": "50+"},
+          {"id": "A13", "name": "CAPES", "type": "brazilian_academic", "accesses": "460M+"},
+          {"id": "A14", "name": "Internet Archive", "type": "historical", "items": "40M+"}
+        ],
+        "government_apis": [
+          {"id": "N09", "name": "IBGE", "type": "demographic", "apis": "25+"},
+          {"id": "N10", "name": "INEP", "type": "education"},
+          {"id": "N11", "name": "CNJ", "type": "justice"},
+          {"id": "N12", "name": "DATASUS", "type": "health"},
+          {"id": "N13", "name": "IPEA", "type": "economic"},
+          {"id": "N14", "name": "World Bank", "type": "international", "indicators": "14K+"},
+          {"id": "N15", "name": "dados.gov.br", "type": "government_open_data", "datasets": "15K+"}
+        ]
+      },
+      "pageindex-mcp": {
+        "agents": 10,
+        "domains": ["document_rag", "reasoning_search", "tree_indexing"],
+        "layers": ["Encoder", "Decoder"],
+        "capabilities": [
+          "index_documents",
+          "query_documents",
+          "rag_search",
+          "tree_reasoning",
+          "multi_document_aggregation"
+        ],
+        "features": {
+          "vectorless_rag": true,
+          "tree_indexing": true,
+          "reasoning_search": true,
+          "no_chunking": true,
+          "context_preservation": true
+        },
+        "api": {
+          "url": "https://api.pageindex.ai/mcp",
+          "auth": "api_key",
+          "registration": "https://dash.pageindex.ai/api-keys"
+        }
+      },
+      "maswos-rag": {
+        "agents": 21,
+        "domains": ["rag_retrieval", "semantic_search", "knowledge_graph", "multi_source"],
+        "layers": ["Encoder", "Retrieval", "Validation", "Augmentation", "Generation", "Output"],
+        "strategies": [
+          {"type": "vanilla", "class": "VanillaRAG", "path": "rag.classic.vanilla_rag"},
+          {"type": "memory", "class": "MemoryRAG", "path": "rag.memory.memory_rag"},
+          {"type": "agentic", "class": "AgenticRAG", "path": "rag.agentic.agentic_rag"},
+          {"type": "graph", "class": "GraphRAG", "path": "rag.graph.graph_rag"},
+          {"type": "hybrid", "class": "HybridRAG", "path": "rag.hybrid.hybrid_rag"},
+          {"type": "crag", "class": "CRAG", "path": "rag.corrective.crag"},
+          {"type": "adaptive", "class": "AdaptiveRAG", "path": "rag.adaptive.adaptive_rag"},
+          {"type": "fusion", "class": "RAGFusion", "path": "rag.fusion.rag_fusion"},
+          {"type": "hyde", "class": "HyDE", "path": "rag.hyde.hyde"}
+        ],
+        "orchestrator": {
+          "class": "RAGOrchestrator",
+          "path": "rag.orchestrator.rag_orchestrator"
+        }
+      }
+    },
+    "layers": ["Input", "Routing", "ParallelExecution", "Aggregation", "Output"],
+    "quality_gates": ["G0", "GR", "GE", "GF"]
+  },
+  "agents": {
+    "orchestrator": {
+      "id": "orchestrator_unified",
+      "name": "Orchestrator Unificado",
+      "layer": "Input",
+      "transformer_mapping": "Input Embedding",
+      "description": "Detecta intent e roteia para MCP correto",
+      "capabilities": ["intent_detection", "mcp_routing", "cross_mcp_coordination"]
+    },
+    "router": [
+      {
+        "id": "intent_router",
+        "name": "Intent Router",
+        "layer": "Routing",
+        "transformer_mapping": "Self-Attention",
+        "description": "Roteia intents para MCPS específicos",
+        "decision_matrix": {
+          "juridico": ["juridico_petition", "jurisprudence_search", "legal_advice"],
+          "skill_generation": ["create_skill", "generate_agents", "assemble_workflow"],
+          "academic": ["research_paper", "collect_data", "validate_methodology"],
+          "rag": ["semantic_search", "knowledge_graph", "multi_source_search", "validate_sources", "adaptive_query"]
+        }
+      },
+      {
+        "id": "cross_mcp_query",
+        "name": "Cross-MCP Query",
+        "layer": "Routing",
+        "description": "Executa query simultânea em múltiplos MCPS",
+        "parallel_execution": true
+      }
+    ],
+    "aggregator": [
+      {
+        "id": "result_aggregator",
+        "name": "Result Aggregator",
+        "layer": "Aggregation",
+        "transformer_mapping": "Multi-Head Attention",
+        "description": "Agrega resultados de múltiplos MCPS",
+        "strategies": ["weighted_merge", "priority_based", "consensus"]
+      },
+      {
+        "id": "mcp_status_monitor",
+        "name": "MCP Status Monitor",
+        "layer": "Aggregation",
+        "description": "Monitora status de todos os MCPS integrados",
+        "health_checks": ["availability", "latency", "capacity"]
+      },
+      {
+        "id": "scraper_collector",
+        "name": "Scraper Collection Agent",
+        "layer": "Collection",
+        "transformer_mapping": "Multi-Source Collector",
+        "description": "Coordena coleta de dados de múltiplas fontes via scrapers",
+        "capabilities": ["multi_source_collection", "parallel_scraping", "cache_management"],
+        "sources": ["ARXIV", "PUBMED", "SEMANTICSCHOLAR", "DOAJ", "CORE", "AMINER", "DADOSGOV", "CAPES", "IBGE", "WORLD_BANK", "INTERNATIONAL", "INTERNET_ARCHIVE"]
+      },
+      {
+        "id": "academic_collector",
+        "name": "Academic Collection Agent",
+        "layer": "Collection",
+        "transformer_mapping": "Academic Domain Collector",
+        "description": "Coleta dados acadêmicos de fontes especializadas",
+        "domains": {
+          "cs": ["ARXIV", "SEMANTICSCHOLAR", "OPENREVIEW"],
+          "biomedical": ["PUBMED", "SEMANTICSCHOLAR", "DOAJ"],
+          "general": ["ARXIV", "PUBMED", "SEMANTICSCHOLAR", "DOAJ"]
+        }
+      },
+      {
+        "id": "brazilian_data_collector",
+        "name": "Brazilian Data Collector",
+        "layer": "Collection",
+        "transformer_mapping": "National Data Collector",
+        "description": "Coleta dados brasileiros de fontes governamentais",
+        "data_types": {
+          "demographic": ["IBGE"],
+          "government": ["DADOSGOV", "IBGE"],
+          "academic": ["CAPES"],
+          "historical": ["INTERNET_ARCHIVE"]
+        }
+      },
+      {
+        "id": "international_data_collector",
+        "name": "International Data Collector",
+        "layer": "Collection",
+        "transformer_mapping": "Global Data Collector",
+        "description": "Coleta dados de organizações internacionais",
+        "sources": ["WORLD_BANK", "WORLD_BANK_DOCS", "INTERNATIONAL"]
+      },
+      {
+        "id": "pageindex_encoder",
+        "name": "PageIndex Encoder",
+        "layer": "Encoder",
+        "transformer_mapping": "Tree Index Builder",
+        "description": "Indexa documentos usando tree-based RAG",
+        "capabilities": ["document_indexing", "tree_construction", "context_preservation"]
+      },
+      {
+        "id": "pageindex_decoder",
+        "name": "PageIndex Decoder",
+        "layer": "Decoder",
+        "transformer_mapping": "Reasoning Query",
+        "description": "Executa queries reasoning-based em documentos indexados",
+        "capabilities": ["tree_search", "reasoning_path", "context_retrieval"]
+      },
+      {
+        "id": "pageindex_rag_orchestrator",
+        "name": "PageIndex RAG Orchestrator",
+        "layer": "Synthesis",
+        "transformer_mapping": "Multi-Document Aggregator",
+        "description": "Orquestra RAG multi-documento com tree reasoning",
+        "capabilities": ["multi_document_rag", "cross_document_reasoning", "result_aggregation"]
+      }
+    ],
+    "validator": [
+      {
+        "id": "cross_mcp_validator",
+        "name": "Cross-MCP Validator",
+        "layer": "Validation",
+        "transformer_mapping": "Layer Normalization",
+        "description": "Valida consistência entre resultados de MCPS",
+        "checks": ["semantic_consistency", " factual_alignment", "quality_threshold"]
+      }
+    ]
+  },
+    "agents": {
+        "orchestrator": {
+            "id": "orchestrator_unified",
+            "name": "Orchestrator Unificado",
+            "layer": "Input",
+            "transformer_mapping": "Input Embedding",
+            "description": "Detecta intent e roteia para MCP correto",
+            "capabilities": ["intent_detection", "mcp_routing", "cross_mcp_coordination"]
+        },
+        "router": [
+            {
+                "id": "intent_router",
+                "name": "Intent Router",
+                "layer": "Routing",
+                "transformer_mapping": "Self-Attention",
+                "description": "Roteia intents para MCPS específicos",
+                "decision_matrix": {
+                    "juridico": ["juridico_petition", "jurisprudence_search", "legal_advice"],
+                    "skill_generation": ["create_skill", "generate_agents", "assemble_workflow"],
+                    "academic": ["research_paper", "collect_data", "validate_methodology"]
+                }
+            },
+            {
+                "id": "cross_mcp_query",
+                "name": "Cross-MCP Query",
+                "layer": "Routing",
+                "description": "Executa query simultânea em múltiplos MCPS",
+                "parallel_execution": true
+            }
+        ],
+        "aggregator": [
+            {
+                "id": "result_aggregator",
+                "name": "Result Aggregator",
+                "layer": "Aggregation",
+                "transformer_mapping": "Multi-Head Attention",
+                "description": "Agrega resultados de múltiplos MCPS",
+                "strategies": ["weighted_merge", "priority_based", "consensus"]
+            },
+            {
+                "id": "mcp_status_monitor",
+                "name": "MCP Status Monitor",
+                "layer": "Aggregation",
+                "description": "Monitora status de todos os MCPS integrados",
+                "health_checks": ["availability", "latency", "capacity"]
+            },
+            {
+                "id": "scraper_collector",
+                "name": "Scraper Collection Agent",
+                "layer": "Collection",
+                "transformer_mapping": "Multi-Source Collector",
+                "description": "Coordena coleta de dados de múltiplas fontes via scrapers",
+                "capabilities": ["multi_source_collection", "parallel_scraping", "cache_management"],
+                "sources": ["ARXIV", "PUBMED", "SEMANTICSCHOLAR", "DOAJ", "CORE", "AMINER", "DADOSGOV", "CAPES", "IBGE", "WORLD_BANK", "INTERNATIONAL", "INTERNET_ARCHIVE"]
+            },
+            {
+                "id": "academic_collector",
+                "name": "Academic Collection Agent",
+                "layer": "Collection",
+                "transformer_mapping": "Academic Domain Collector",
+                "description": "Coleta dados acadêmicos de fontes especializadas",
+                "domains": {
+                    "cs": ["ARXIV", "SEMANTICSCHOLAR", "OPENREVIEW"],
+                    "biomedical": ["PUBMED", "SEMANTICSCHOLAR", "DOAJ"],
+                    "general": ["ARXIV", "PUBMED", "SEMANTICSCHOLAR", "DOAJ"]
+                }
+            },
+            {
+                "id": "brazilian_data_collector",
+                "name": "Brazilian Data Collector",
+                "layer": "Collection",
+                "transformer_mapping": "National Data Collector",
+                "description": "Coleta dados brasileiros de fontes governamentais",
+                "data_types": {
+                    "demographic": ["IBGE"],
+                    "government": ["DADOSGOV", "IBGE"],
+                    "academic": ["CAPES"],
+                    "historical": ["INTERNET_ARCHIVE"]
+                }
+            },
+            {
+                "id": "international_data_collector",
+                "name": "International Data Collector",
+                "layer": "Collection",
+                "transformer_mapping": "Global Data Collector",
+                "description": "Coleta dados de organizações internacionais",
+                "sources": ["WORLD_BANK", "WORLD_BANK_DOCS", "INTERNATIONAL"]
+            },
+            {
+                "id": "pageindex_encoder",
+                "name": "PageIndex Encoder",
+                "layer": "Encoder",
+                "transformer_mapping": "Tree Index Builder",
+                "description": "Indexa documentos usando tree-based RAG",
+                "capabilities": ["document_indexing", "tree_construction", "context_preservation"]
+            },
+            {
+                "id": "pageindex_decoder",
+                "name": "PageIndex Decoder",
+                "layer": "Decoder",
+                "transformer_mapping": "Reasoning Query",
+                "description": "Executa queries reasoning-based em documentos indexados",
+                "capabilities": ["tree_search", "reasoning_path", "context_retrieval"]
+            },
+            {
+                "id": "pageindex_rag_orchestrator",
+                "name": "PageIndex RAG Orchestrator",
+                "layer": "Synthesis",
+                "transformer_mapping": "Multi-Document Aggregator",
+                "description": "Orquestra RAG multi-documento com tree reasoning",
+                "capabilities": ["multi_document_rag", "cross_document_reasoning", "result_aggregation"]
+            },
+            {
+                "id": "autonomous_agent",
+                "name": "MASWOS Autonomous Agent",
+                "layer": "Autonomous",
+                "transformer_mapping": "Agent Loop (Claude+Manus)",
+                "description": "Agente autônomo baseado em Claude Agent Loop + Manus Planner",
+                "inspired_by": ["Claude Agent SDK", "Manus AI"],
+                "capabilities": [
+                    "goal_decomposition",
+                    "parallel_execution",
+                    "tool_calling",
+                    "memory_persistence",
+                    "self_correction",
+                    "code_execution",
+                    "mcp_integration"
+                ],
+                "components": {
+                    "planner": "TaskPlanner - decomposição de objetivos",
+                    "memory": "AgentMemory - camadas de memória",
+                    "tools": "ToolRegistry - ferramentas disponíveis",
+                    "loop": "MASWOSAutonomousAgent - agent loop"
+                },
+                "sub_agents": [
+                    "ResearchSubAgent",
+                    "CodeSubAgent"
+                ]
+            }
+        ],
+        "validator": [
+            {
+                "id": "cross_mcp_validator",
+                "name": "Cross-MCP Validator",
+                "layer": "Validation",
+                "transformer_mapping": "Layer Normalization",
+                "description": "Valida consistência entre resultados de MCPS",
+                "checks": ["semantic_consistency", " factual_alignment", "quality_threshold"]
+            }
+        ],
+        "rag": [
+            {
+                "id": "R01",
+                "name": "VanillaRetriever",
+                "layer": "Retrieval",
+                "transformer_mapping": "Similarity Search",
+                "description": "Executor de busca básica RAG",
+                "rag_type": "vanilla"
+            },
+            {
+                "id": "R02",
+                "name": "VanillaAugmenter",
+                "layer": "Augmentation",
+                "transformer_mapping": "Context Concatenation",
+                "description": "Construtor de prompts",
+                "rag_type": "vanilla"
+            },
+            {
+                "id": "R03",
+                "name": "VanillaGenerator",
+                "layer": "Output",
+                "transformer_mapping": "Output Projection",
+                "description": "Gerador de respostas",
+                "rag_type": "vanilla"
+            },
+            {
+                "id": "R04",
+                "name": "MemoryManager",
+                "layer": "Retrieval",
+                "transformer_mapping": "Memory Context",
+                "description": "Gerenciador de memória Redis",
+                "rag_type": "memory"
+            },
+            {
+                "id": "R05",
+                "name": "SessionContextBuilder",
+                "layer": "Augmentation",
+                "transformer_mapping": "Session Embedding",
+                "description": "Construtor de contexto de sessão",
+                "rag_type": "memory"
+            },
+            {
+                "id": "R06",
+                "name": "DatasetRouter",
+                "layer": "Retrieval",
+                "transformer_mapping": "Dynamic Routing",
+                "description": "Roteador de datasets",
+                "rag_type": "agentic"
+            },
+            {
+                "id": "R07",
+                "name": "QueryClassifier",
+                "layer": "Encoder",
+                "transformer_mapping": "Classification",
+                "description": "Classificador de queries",
+                "rag_type": "agentic"
+            },
+            {
+                "id": "R08",
+                "name": "AgentCoordinator",
+                "layer": "Control",
+                "transformer_mapping": "Agent Orchestration",
+                "description": "Coordenador de agentes",
+                "rag_type": "agentic"
+            },
+            {
+                "id": "R09",
+                "name": "GraphEntityExtractor",
+                "layer": "Encoder",
+                "transformer_mapping": "Entity Recognition",
+                "description": "Extrator de entidades",
+                "rag_type": "graph"
+            },
+            {
+                "id": "R10",
+                "name": "GraphQueryExecutor",
+                "layer": "Retrieval",
+                "transformer_mapping": "Graph Traversal",
+                "description": "Executor de queries em grafo",
+                "rag_type": "graph"
+            },
+            {
+                "id": "R11",
+                "name": "HybridFusionEngine",
+                "layer": "Retrieval",
+                "transformer_mapping": "Multi-Modal Fusion",
+                "description": "Motor de fusão híbrida",
+                "rag_type": "hybrid"
+            },
+            {
+                "id": "R12",
+                "name": "ContextAggregator",
+                "layer": "Augmentation",
+                "transformer_mapping": "Context Merge",
+                "description": "Agregador de contexto",
+                "rag_type": "hybrid"
+            },
+            {
+                "id": "R13",
+                "name": "QualityEvaluator",
+                "layer": "Validation",
+                "transformer_mapping": "Quality Assessment",
+                "description": "Avaliador de qualidade",
+                "rag_type": "crag"
+            },
+            {
+                "id": "R14",
+                "name": "RetrievalCorrector",
+                "layer": "Retrieval",
+                "transformer_mapping": "Correction Gate",
+                "description": "Corrige resultados de busca",
+                "rag_type": "crag"
+            },
+            {
+                "id": "R15",
+                "name": "SourceValidator",
+                "layer": "Validation",
+                "transformer_mapping": "Source Authentication",
+                "description": "Validador de fontes",
+                "rag_type": "crag"
+            },
+            {
+                "id": "R16",
+                "name": "QueryComplexityAnalyzer",
+                "layer": "Encoder",
+                "transformer_mapping": "Complexity Detection",
+                "description": "Analisador de complexidade",
+                "rag_type": "adaptive"
+            },
+            {
+                "id": "R17",
+                "name": "StrategySelector",
+                "layer": "Control",
+                "transformer_mapping": "Strategy Planning",
+                "description": "Seletor de estratégia",
+                "rag_type": "adaptive"
+            },
+            {
+                "id": "R18",
+                "name": "MultiSourceRetriever",
+                "layer": "Retrieval",
+                "transformer_mapping": "Multi-Source Search",
+                "description": "Recuperador multi-fonte",
+                "rag_type": "fusion"
+            },
+            {
+                "id": "R19",
+                "name": "RRFScorer",
+                "layer": "Retrieval",
+                "transformer_mapping": "Rank Fusion",
+                "description": "Calculador RRF",
+                "rag_type": "fusion"
+            },
+            {
+                "id": "R20",
+                "name": "SourceWeighter",
+                "layer": "Augmentation",
+                "transformer_mapping": "Weight Assignment",
+                "description": "Ponderador de fontes",
+                "rag_type": "fusion"
+            },
+            {
+                "id": "R21",
+                "name": "HypotheticalDocGenerator",
+                "layer": "Encoder",
+                "transformer_mapping": "Document Synthesis",
+                "description": "Gerador de docs hipotéticos",
+                "rag_type": "hyde"
+            }
+        ]
+    },
+    "pipelines": {
+        "juridico_petition": {
+      "description": "Pipeline para geração de petições jurídicas",
+      "mcp_sequence": ["maswos-juridico"],
+      "required_agents": ["N01", "N03", "N13", "N14", "N21", "N25"],
+      "quality_threshold": 0.95,
+      "output_format": "peticao_OAB"
+    },
+    "skill_generation": {
+      "description": "Pipeline para geração de skills",
+      "mcp_sequence": ["maswos-mcp"],
+      "required_agents": ["N01_intent_parser", "domain_analyzer", "scope_mapper", "agent_factory_core", "skill_assembler"],
+      "tier_routing": true,
+      "output_format": "SKILL.md"
+    },
+    "academic_research": {
+      "description": "Pipeline para pesquisa acadêmica com coleta via scrapers",
+      "mcp_sequence": ["academic"],
+      "required_agents": ["research_planner", "scraper_collector", "academic_collector", "paper_collector", "dataset_loader", "methodology_generator"],
+      "quality_threshold": 0.90,
+      "output_format": "academic_paper",
+      "scraper_integration": {
+        "enabled": true,
+        "sources": ["ARXIV", "PUBMED", "SEMANTICSCHOLAR", "DOAJ", "CORE", "OPENALEX"],
+        "fallback_strategy": "multi_source"
+      }
+    },
+    "brazilian_data_collection": {
+      "description": "Pipeline para coleta de dados brasileiros",
+      "mcp_sequence": ["academic"],
+      "required_agents": ["brazilian_data_collector", "scraper_collector"],
+      "quality_threshold": 0.85,
+      "output_format": "dataset",
+      "scraper_integration": {
+        "enabled": true,
+        "sources": ["IBGE", "CAPES", "DADOSGOV", "DATASUS", "IPEA"],
+        "fallback_strategy": "parallel"
+      }
+    },
+    "international_data_collection": {
+      "description": "Pipeline para coleta de dados internacionais",
+      "mcp_sequence": ["academic"],
+      "required_agents": ["international_data_collector", "scraper_collector"],
+      "quality_threshold": 0.85,
+      "output_format": "dataset",
+      "scraper_integration": {
+        "enabled": true,
+        "sources": ["WORLD_BANK", "WORLD_BANK_DOCS", "INTERNATIONAL"],
+        "fallback_strategy": "sequential"
+      }
+    },
+    "pageindex_rag_pipeline": {
+      "description": "Pipeline RAG vectorless com PageIndex",
+      "mcp_sequence": ["pageindex-mcp"],
+      "required_agents": ["pageindex_encoder", "pageindex_decoder", "pageindex_rag_orchestrator"],
+      "quality_threshold": 0.92,
+      "output_format": "reasoned_answer",
+      "features": {
+        "tree_indexing": true,
+        "reasoning_search": true,
+        "no_chunking": true,
+        "multi_document": true
+      }
+    },
+    "hybrid_rag_pipeline": {
+      "description": "Pipeline híbrido: scrapers + PageIndex RAG",
+      "mcp_sequence": ["academic", "pageindex-mcp"],
+      "required_agents": ["scraper_collector", "academic_collector", "pageindex_encoder", "pageindex_decoder", "pageindex_rag_orchestrator"],
+      "quality_threshold": 0.95,
+      "output_format": "research_document",
+      "workflow": {
+        "step1": "Collect data from scrapers (arXiv, PubMed, etc.)",
+        "step2": "Index documents with PageIndex (tree-based)",
+        "step3": "Query with reasoning using PageIndex decoder",
+        "step4": "Aggregate results with cross-document reasoning"
+      }
+    },
+    "cross_mcp_workflow": {
+      "description": "Workflow que combina múltiplos MCPS",
+      "mcp_sequence": ["maswos-juridico", "maswos-mcp"],
+      "use_cases": [
+        "legal_research_with_skill_generation",
+        "academic_research_with_legal_validation",
+        "comprehensive_research_with_generation"
+      ]
+    },
+    "maswos_rag_pipeline": {
+      "description": "Pipeline RAG avançado com 9 estratégias de recuperação",
+      "mcp_sequence": ["maswos-rag"],
+      "required_agents": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21"],
+      "quality_threshold": 0.95,
+      "output_format": "rag_answer",
+      "strategies": {
+        "vanilla": {"agents": ["R01", "R02", "R03"], "quality_gate": "GR0"},
+        "memory": {"agents": ["R04", "R05", "R03"], "quality_gate": "GR1"},
+        "agentic": {"agents": ["R06", "R07", "R08", "R03"], "quality_gate": "GR1"},
+        "graph": {"agents": ["R09", "R10", "R03"], "quality_gate": "GR1"},
+        "hybrid": {"agents": ["R11", "R12", "R03"], "quality_gate": "GR4"},
+        "crag": {"agents": ["R13", "R14", "R15", "R02", "R03"], "quality_gate": "GR2"},
+        "adaptive": {"agents": ["R16", "R17", "R01", "R02", "R03"], "quality_gate": "GR3"},
+        "fusion": {"agents": ["R18", "R19", "R20", "R02", "R03"], "quality_gate": "GR4"},
+        "hyde": {"agents": ["R21", "R01", "R02", "R03"], "quality_gate": "GR0"}
+      },
+      "use_cases": [
+        "busca_semantica_simples",
+        "revisao_completa_artigo",
+        "roteamento_multi_fonte",
+        "rede_citacoes",
+        "validacao_fontes",
+        "perguntas_variaveis",
+        "multiplas_fontes_brasil"
+      ]
+    },
+    "validated_research_pipeline": {
+      "description": "Pesquisa acadêmica com validação CRAG",
+      "mcp_sequence": ["maswos-rag", "maswos-academic"],
+      "required_agents": ["R13", "R14", "R15", "R02", "R03"],
+      "quality_threshold": 0.98,
+      "output_format": "validated_research",
+      "focus": ["validacao_fontes", "jurisprudencia", "estatisticas"]
+    },
+    "comprehensive_research_pipeline": {
+      "description": "Pesquisa completa com GraphRAG + Hybrid RAG",
+      "mcp_sequence": ["maswos-rag", "academic"],
+      "required_agents": ["R09", "R10", "R11", "R12", "R02", "R03"],
+      "quality_threshold": 0.97,
+      "output_format": "comprehensive_research",
+      "features": ["knowledge_graph", "semantic_search", "cross_document"]
+    }
+  },
+  "cross_mcp_protocol": {
+    "synchronization": {
+      "strategy": "event_driven",
+      "consistency_model": "eventual_consistency",
+      "conflict_resolution": "priority_based"
+    },
+    "query_execution": {
+      "parallel_threshold": 3,
+      "timeout_ms": 30000,
+      "retry_attempts": 3
+    },
+    "result_merging": {
+      "strategies": [
+        {"name": "weighted_merge", "weight_by": "relevance_score"},
+        {"name": "priority_based", "priority_order": ["maswos-juridico", "maswos-mcp", "academic"]},
+        {"name": "consensus", "requires": "majority_agreement"}
+      ]
+    }
+  },
+  "quality_gates": {
+    "G0": {
+      "name": "Intent Detection",
+      "threshold": 1.0,
+      "agents": ["orchestrator_unified"]
+    },
+    "GR": {
+      "name": "Routing Validation",
+      "threshold": 0.85,
+      "agents": ["intent_router"]
+    },
+    "GE": {
+      "name": "Execution Validation",
+      "threshold": 0.90,
+      "agents": ["cross_mcp_validator"]
+    },
+    "GF": {
+      "name": "Final Aggregation",
+      "threshold": 0.95,
+      "agents": ["result_aggregator"]
+    }
+  },
+  "handoff_protocol": {
+    "required_fields": [
+      "session_id",
+      "agent_source",
+      "agent_target",
+      "mcp_source",
+      "mcp_target",
+      "timestamp",
+      "context",
+      "quality_score",
+      "audit_trail"
+    ],
+    "cross_mcp_fields": [
+      "mcp_context",
+      "intermediate_results",
+      "partial_outputs"
+    ],
+    "validations": [
+      "context_integrity",
+      "threshold_compliance",
+      "mcp_availability",
+      "audit_log"
+    ]
+  },
+  "monitoring": {
+    "status_tracking": true,
+    "latency_metrics": true,
+    "error_rate_tracking": true,
+    "health_checks": {
+      "interval_seconds": 60,
+      "timeout_seconds": 5
+    }
+  }
+}

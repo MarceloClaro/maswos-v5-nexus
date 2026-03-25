@@ -1,0 +1,37 @@
+{
+  "data_coleta": "2026-03-22T14:15:14.793571",
+  "fontes": [
+    "World Bank API",
+    "OECD PISA"
+  ],
+  "indicadores": [
+    "NY.GDP.PCAP.PP.KD",
+    "NY.GDP.PCAP.KD",
+    "SE.PRM.ENRR",
+    "SE.SEC.ENRR",
+    "SE.TER.ENRR",
+    "SE.XPD.TOTL.GD.ZS",
+    "SE.XPD.PRIM.PC.ZS",
+    "SE.XPD.SECO.PC.ZS",
+    "SE.ADT.LITR.ZS",
+    "SE.SEC.AG25.LT.ZS",
+    "GB.XPD.RSDV.GD.ZS",
+    "IP.PAT.RESD",
+    "HD.HDI.OV",
+    "SP.URB.TOTL.IN.ZS",
+    "SP.POP.TOTL",
+    "SL.UEM.TOTL.ZS",
+    "SL.TLF.TERT.ZS"
+  ],
+  "paises": [
+    "BRA",
+    "MEX",
+    "TUR",
+    "CHN",
+    "IND",
+    "KOR",
+    "MYS"
+  ],
+  "periodo": "1960-2023",
+  "total_observacoes": 0
+}

@@ -1,0 +1,668 @@
+{
+  "name": "maswos-juridico-mcp",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - MCP Jurídico Brasileiro com arquitetura Transformer-Agentes",
+  "architecture": {
+    "transformer_mapping": true,
+    "layers": [
+      "Encoder",
+      "Collection",
+      "Validation",
+      "Analysis",
+      "Synthesis",
+      "Output"
+    ],
+    "quality_gates": [
+      "G0",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "GF"
+    ],
+    "tier_system": [
+      "MAGNUM",
+      "STANDARD",
+      "EXPRESS"
+    ],
+    "rag_protocol": "3_AXES",
+    "actor_critic_loop": true,
+    "critic_router": true
+  },
+  "agents": {
+    "tribunal_supremo": [
+      {
+        "id": "TS1",
+        "name": "Jurista Supremo PhD Summa",
+        "stars": 5,
+        "layer": "Meta",
+        "dimensions": [
+          "fundamentacao_teorica",
+          "conformidade_constitucional",
+          "qualidade_argumentativa",
+          "precedentes",
+          "estrategia_processual",
+          "linguagem",
+          "completude"
+        ],
+        "thresholds": {
+          "fundamentacao_teorica": 0.95,
+          "conformidade_constitucional": 0.99,
+          "qualidade_argumentativa": 0.9,
+          "precedentes": 0.95,
+          "estrategia_processual": 0.85,
+          "linguagem": 0.9,
+          "completude": 0.95
+        }
+      },
+      {
+        "id": "TS2",
+        "name": "Gerente Supremo Federal PhD",
+        "stars": 4,
+        "layer": "Meta",
+        "description": "Diretor jurídico federal com coordenação de alta complexidade"
+      }
+    ],
+    "coordenacao": [
+      {
+        "id": "CO1",
+        "name": "Coordenador Geral",
+        "layer": "Meta"
+      },
+      {
+        "id": "CO2",
+        "name": "Coordenador de Validação",
+        "layer": "Meta"
+      },
+      {
+        "id": "CO3",
+        "name": "Coordenador de Análise",
+        "layer": "Meta"
+      },
+      {
+        "id": "CO4",
+        "name": "Coordenador de Síntese",
+        "layer": "Meta"
+      }
+    ],
+    "encoder": [
+      {
+        "id": "N01",
+        "name": "Intent Parser",
+        "layer": "Encoder",
+        "intents": [
+          "peticão",
+          "análise",
+          "pesquisa",
+          "auditoria",
+          "recomendação"
+        ],
+        "transformer_mapping": "Input Embedding"
+      },
+      {
+        "id": "N02",
+        "name": "TIER Router",
+        "layer": "Encoder",
+        "transformer_mapping": "Positional Encoding",
+        "complexity_score_formula": "w_type × type_score + w_entities × |entities| + w_context × context_score"
+      },
+      {
+        "id": "N03",
+        "name": "RAG 3E Coordinator",
+        "layer": "Encoder",
+        "transformer_mapping": "Encoder Stack",
+        "eixos": [
+          "fundacional",
+          "estado_arte",
+          "metodologica"
+        ],
+        "protocol": "RAG-3E",
+        "citation_axes": {
+          "foundational": {
+            "temporal": ">10 years",
+            "authority": "citations > 100"
+          },
+          "state_of_the_art": {
+            "temporal": "3-5 years",
+            "qualis": [
+              "A1",
+              "A2"
+            ]
+          },
+          "methodological": {
+            "keywords": [
+              "methodology",
+              "validation",
+              "research design"
+            ]
+          }
+        },
+        "temporal_stratification": true
+      },
+      {
+        "id": "N03a",
+        "name": "Chain-of-Thought Enhancer",
+        "layer": "Encoder",
+        "transformer_mapping": "Multi-Head Attention",
+        "description": "Enhances reasoning with explicit step-by-step chain of thought",
+        "capabilities": [
+          "explicit_reasoning",
+          "step_by_step_analysis",
+          "causal_chain"
+        ]
+      }
+    ],
+    "collection": [
+      {
+        "id": "N04",
+        "name": "WebScraper",
+        "source": "Portais .gov.br",
+        "update_rate": "real-time"
+      },
+      {
+        "id": "N05",
+        "name": "LexMLScraper",
+        "source": "lexml.gov.br",
+        "data_type": "Legislação",
+        "update_rate": "daily"
+      },
+      {
+        "id": "N06",
+        "name": "STFScraper",
+        "source": "portal.stf.jus.br",
+        "data_type": "Jurisprudência STF",
+        "update_rate": "real-time",
+        "fallback_enabled": true,
+        "fallback_agent": "N12_integrated_scraper",
+        "techniques": [
+          "api_alternative",
+          "portal_search",
+          "transparencia_search"
+        ]
+      },
+      {
+        "id": "N07",
+        "name": "STJScraper",
+        "source": "stj.jus.br",
+        "data_type": "Jurisprudência STJ",
+        "update_rate": "real-time"
+      },
+      {
+        "id": "N08",
+        "name": "TJ-CEScraper",
+        "source": "tjce.jus.br",
+        "data_type": "Jurisprudência TJ-CE",
+        "update_rate": "hourly"
+      },
+      {
+        "id": "N09",
+        "name": "IBGEScraper",
+        "source": "ibge.gov.br",
+        "data_type": "Demografia",
+        "update_rate": "annual",
+        "fallback_enabled": true,
+        "fallback_agent": "N12_integrated_scraper",
+        "techniques": [
+          "api_sidra",
+          "api_localidades",
+          "scraping_web"
+        ]
+      },
+      {
+        "id": "N10",
+        "name": "INEPScraper",
+        "source": "inep.gov.br",
+        "data_type": "Educação",
+        "update_rate": "annual"
+      },
+      {
+        "id": "N11",
+        "name": "CNJScraper",
+        "source": "cnj.jus.br",
+        "data_type": "Estatísticas",
+        "update_rate": "monthly"
+      },
+      {
+        "id": "N12",
+        "name": "PortalMunicipal",
+        "source": "crateus.ce.gov.br",
+        "data_type": "Dados municipais",
+        "update_rate": "variable"
+      },
+      {
+        "id": "N12a",
+        "name": "MethodologyScraper",
+        "source": "IBGE, INEP, IPEA, DATASUS",
+        "data_type": "Metodologia de pesquisa, dados estatísticos, indicadores",
+        "update_rate": "monthly",
+        "capabilities": [
+          "demographic_data",
+          "educational_statistics",
+          "economic_indicators",
+          "research_methodologies"
+        ]
+      },
+      {
+        "id": "N12_integrated_scraper",
+        "name": "Integrated Scraping Agent",
+        "layer": "Collection",
+        "description": "Agente de scraping granular e cirúrigico com fallback automático",
+        "capabilities": [
+          "advanced_scraping",
+          "cache_management",
+          "retry_with_backoff",
+          "browser_headers_rotation",
+          "ssl_bypass",
+          "multi_source_fallback"
+        ],
+        "supported_sources": [
+          "STF",
+          "IBGE",
+          "PUBMED",
+          "Europe_PMC"
+        ],
+        "transformer_mapping": "Multi-Head Attention",
+        "fallback_enabled": true,
+        "cache_ttl_hours": 24
+      }
+    ],
+    "validation": [
+      {
+        "id": "N13",
+        "name": "CrossValidator",
+        "layer": "Validation",
+        "transformer_mapping": "Layer Normalization",
+        "min_sources": 2,
+        "convergence_threshold": 0.8
+      },
+      {
+        "id": "N14",
+        "name": "CitationValidator",
+        "layer": "Validation",
+        "patterns": [
+          "ABNT",
+          "OAB"
+        ],
+        "nbr_10520": true
+      },
+      {
+        "id": "N15",
+        "name": "SourceAuthenticator",
+        "layer": "Validation",
+        "checks": [
+          "domain_official",
+          "ssl_valid",
+          "content_integrity",
+          "update_recency"
+        ],
+        "min_score": 0.8
+      },
+      {
+        "id": "N15a",
+        "name": "SelfConsistencyChecker",
+        "layer": "Validation",
+        "transformer_mapping": "Multi-Sample Voting",
+        "description": "Validates consistency across multiple generations using voting mechanism",
+        "parameters": {
+          "num_generations": 3,
+          "consensus_threshold": 0.67,
+          "method": "majority_voting"
+        }
+      }
+    ],
+    "analysis": [
+      {
+        "id": "N16",
+        "name": "PrecedentAnalyzer",
+        "layer": "Analysis",
+        "courts": [
+          "STF",
+          "STJ",
+          "TJ-CE"
+        ]
+      },
+      {
+        "id": "N17",
+        "name": "LegislationChecker",
+        "layer": "Analysis",
+        "checks": [
+          "vigente",
+          "alterada",
+          "revogada",
+          "suspensa"
+        ]
+      },
+      {
+        "id": "N18",
+        "name": "DoctrineValidator",
+        "layer": "Analysis"
+      },
+      {
+        "id": "N19",
+        "name": "RiskAnalyzer",
+        "layer": "Analysis"
+      },
+      {
+        "id": "N20",
+        "name": "StrategicAdvisor",
+        "layer": "Analysis"
+      }
+    ],
+    "specialists": [
+      {
+        "id": "14",
+        "area": "Civil",
+        "qualification": "PhD",
+        "focus": "Obrigações, Contratos"
+      },
+      {
+        "id": "15",
+        "area": "Constitucional",
+        "qualification": "PhD",
+        "focus": "ADI, ADC, Controle"
+      },
+      {
+        "id": "16",
+        "area": "Penal",
+        "qualification": "PhD",
+        "focus": "Crimes, CPP"
+      },
+      {
+        "id": "17",
+        "area": "Trabalhista",
+        "qualification": "PhD",
+        "focus": "CLT, TST"
+      },
+      {
+        "id": "18",
+        "area": "Tributário",
+        "qualification": "PhD",
+        "focus": "CTN, Impostos"
+      },
+      {
+        "id": "19",
+        "area": "Consumidor",
+        "qualification": "PhD",
+        "focus": "CDC"
+      },
+      {
+        "id": "20",
+        "area": "Administrativo",
+        "qualification": "PhD",
+        "focus": "Licitações"
+      },
+      {
+        "id": "21",
+        "area": "Empresarial",
+        "qualification": "PhD",
+        "focus": "Societário"
+      },
+      {
+        "id": "22",
+        "area": "Internacional",
+        "qualification": "PhD",
+        "focus": "Tratados"
+      }
+    ],
+    "synthesis": [
+      {
+        "id": "N21",
+        "name": "DocumentSynthesizer",
+        "layer": "Synthesis",
+        "transformer_mapping": "Decoder Stack"
+      },
+      {
+        "id": "N22",
+        "name": "ForensicAuditor",
+        "layer": "Synthesis",
+        "audit_coverage": 1.0
+      },
+      {
+        "id": "N23",
+        "name": "AuditReportGenerator",
+        "layer": "Synthesis"
+      }
+    ],
+    "output": [
+      {
+        "id": "N24",
+        "name": "CriticRouter",
+        "layer": "Output",
+        "transformer_mapping": "Self-Attention"
+      },
+      {
+        "id": "N25",
+        "name": "ComplianceChecker",
+        "layer": "Output",
+        "standards": [
+          "OAB",
+          "ABNT"
+        ]
+      },
+      {
+        "id": "N26",
+        "name": "QualityScorer",
+        "layer": "Output",
+        "transformer_mapping": "Output Projection",
+        "final_threshold": 0.99
+      },
+      {
+        "id": "N26a",
+        "name": "ClarityEvaluator",
+        "layer": "Output",
+        "description": "Evaluates argument clarity and coherence on a 1-5 scale",
+        "metrics": [
+          "clarity_score",
+          "coherence_score",
+          "readability_index"
+        ],
+        "threshold": 4.0
+      },
+      {
+        "id": "N26b",
+        "name": "UtilityAssessor",
+        "layer": "Output",
+        "description": "Assesses practical utility and applicability of legal documents",
+        "metrics": [
+          "practical_utility",
+          "applicability_score",
+          "relevance_index"
+        ],
+        "threshold": 4.0
+      }
+    ]
+  },
+  "rag_protocol": {
+    "eixo_1_fundacional": {
+      "description": "Literatura clássica e seminal (>10 anos)",
+      "criteria": {
+        "temporal": "d.year < current_year - 10",
+        "authority": "d.citations > 100 OR d.institutional",
+        "types": [
+          "monografia",
+          "tratado",
+          "comentário"
+        ]
+      }
+    },
+    "eixo_2_estado_arte": {
+      "description": "Literatura recente (3-5 anos)",
+      "criteria": {
+        "temporal": "2019 <= d.year < current_year - 2",
+        "qualis": [
+          "A1",
+          "A2"
+        ],
+        "repositories": [
+          "STF",
+          "STJ",
+          "SciELO"
+        ]
+      }
+    },
+    "eixo_3_metodologica": {
+      "description": "Literatura técnica sobre métodos",
+      "keywords": [
+        "metodologia",
+        "pesquisa jurídica",
+        "validação"
+      ]
+    }
+  },
+  "quality_gates": {
+    "G0": {
+      "threshold": 1.0,
+      "agents": [
+        "Orchestrator"
+      ]
+    },
+    "G1": {
+      "threshold": 0.8,
+      "agents": [
+        "N04-N12",
+        "N12a"
+      ]
+    },
+    "G2": {
+      "threshold": 0.85,
+      "agents": [
+        "N13-N15",
+        "N15a"
+      ]
+    },
+    "G3": {
+      "threshold": 0.9,
+      "agents": [
+        "N16-N20"
+      ]
+    },
+    "G4": {
+      "threshold": 0.95,
+      "agents": [
+        "N21-N23"
+      ]
+    },
+    "GF": {
+      "threshold": 0.99,
+      "agents": [
+        "N24-N26",
+        "N26a",
+        "N26b"
+      ]
+    },
+    "G1_scraping": {
+      "threshold": 0.7,
+      "agents": [
+        "N04-N12",
+        "N12_integrated_scraper"
+      ],
+      "description": "Quality gate para scraping e coleta de dados"
+    }
+  },
+  "actor_critic": {
+    "max_iterations": 10,
+    "dimensions": [
+      {
+        "name": "Fluff",
+        "threshold": 0.0,
+        "weight": 0.1,
+        "penalty": "high"
+      },
+      {
+        "name": "RAG Alignment",
+        "threshold": 1.0,
+        "weight": 0.15,
+        "penalty": "critical"
+      },
+      {
+        "name": "Coesão",
+        "threshold": 0.95,
+        "weight": 0.1,
+        "penalty": "medium"
+      },
+      {
+        "name": "6-Layer",
+        "threshold": 1.0,
+        "weight": 0.1,
+        "penalty": "critical"
+      },
+      {
+        "name": "ABNT",
+        "threshold": 1.0,
+        "weight": 0.1,
+        "penalty": "critical"
+      },
+      {
+        "name": "Factual Accuracy",
+        "threshold": 0.95,
+        "weight": 0.15,
+        "penalty": "critical",
+        "description": "Veracidade factual dos dados e citações"
+      },
+      {
+        "name": "Argument Clarity",
+        "threshold": 4.0,
+        "weight": 0.15,
+        "penalty": "high",
+        "description": "Clareza argumentativa em escala 1-5"
+      },
+      {
+        "name": "Formal Compliance",
+        "threshold": 1.0,
+        "weight": 0.1,
+        "penalty": "critical",
+        "description": "Conformidade OAB/STF 100%"
+      },
+      {
+        "name": "Practical Utility",
+        "threshold": 4.0,
+        "weight": 0.15,
+        "penalty": "high",
+        "description": "Utilidade prática em escala 1-5"
+      }
+    ]
+  },
+  "handoff_protocol": {
+    "required_fields": [
+      "session_id",
+      "agent_source",
+      "agent_target",
+      "timestamp",
+      "context",
+      "quality_score",
+      "audit_trail"
+    ],
+    "validations": [
+      "context_integrity",
+      "threshold_compliance",
+      "audit_log"
+    ],
+    "exceptions": {
+      "QUALITY_BELOW_THRESHOLD": {
+        "action": "retry|escalate",
+        "max_retries": 3
+      },
+      "TIMEOUT": {
+        "action": "fallback_agent",
+        "fallback": "generalist_agent"
+      },
+      "INVALID_CONTEXT": {
+        "action": "reject",
+        "notification": "user_alert"
+      }
+    }
+  },
+  "metrics": {
+    "precision_target": 0.99,
+    "convergence_target": 1.0,
+    "oab_score_target": 1.0,
+    "traceability_target": 1.0,
+    "success_rate_target": 0.99,
+    "legal_domain_metrics": {
+      "factual_accuracy_target": 0.95,
+      "argument_clarity_target": 4.0,
+      "formal_compliance_target": 1.0,
+      "practical_utility_target": 4.0
+    }
+  }
+}

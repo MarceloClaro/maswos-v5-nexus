@@ -1,0 +1,73 @@
+Checklist de Restauração do Ecossistema Opencode
+Data do Backup: 2026-03-23
+Arquivo: backup-opencode-todos-20260323.tar.gz (51MB)
+
+## Itens Incluídos no Backup:
+
+### 1. Diretório ~/.opencode (Principal)
+- [ ] skills/maswos-academic/ (20 agentes)
+- [ ] unified/academic/ecosystem-transformer/ (agentes Transformer)
+- [ ] unified/juridico/juridico-brasil/
+- [ ] unified/general/webdev-frontend-seo/
+- [ ] node_modules/ (dependências Opencode)
+- [ ] package.json, bun.lock
+
+### 2. Skills Locais
+- [ ] criador-de-artigo-v2/ (skill completo)
+- [ ] PageIndex/ (projeto PageIndex com dependências)
+- [ ] examples/ (exemplos de integração MCP)
+
+### 3. Configurações MCP
+- [ ] mcp_servers_config.json
+- [ ] ecosystem-transformer-config.json
+- [ ] maswos-academic-config.json
+- [ ] maswos-academic-geospatial-config.json
+- [ ] maswos-juridico-config.json
+- [ ] maswos-mcp-config.json
+- [ ] academic-api-config.json
+
+### 4. Chaves e Credenciais
+- [ ] .env (PAGEINDEX_API_KEY)
+- [ ] academic-api-keys.env
+
+### 5. Diretórios de Projeto
+- [ ] mcp-ecossistema-tese/ (projeto completo com mapas)
+- [ ] mcp-tese-completa/
+
+### 6. Documentação
+- [ ] SKILL.md
+- [ ] SKILL_ACADEMIC.md
+- [ ] SKILL_UNIFICADO.md
+
+## Procedimento de Restauração:
+
+1. **Extrair backup:**
+   ```bash
+   tar -xzvf backup-opencode-todos-20260323.tar.gz
+   ```
+
+2. **Copiar ~/.opencode:**
+   - Copiar `.opencode/` para `%USERPROFILE%\.opencode\`
+
+3. **Restaurar arquivos do projeto:**
+   - Copiar todos os arquivos listados acima para o diretório do projeto
+
+4. **Instalar dependências:**
+   - PageIndex: `pip install -r PageIndex/requirements.txt`
+   - Opencode: `npm install` em `~/.opencode` (se necessário)
+
+5. **Verificar configurações:**
+   - Revisar chaves de API nos arquivos .env
+   - Testar conexões MCP
+
+## Notas de Segurança:
+- ⚠️ As chaves de API estão incluídas no backup
+- 🔒 Recomendado: Usar backup em local seguro
+- 🔄 Após restore, considerar regenerar chaves se necessário
+
+## Scripts de Restauração:
+- Windows Batch: restore-opencode.bat
+- PowerShell: restore-opencode.ps1
+- Manual: README-RESTORE.txt
+
+Backup criado com sucesso! ✅

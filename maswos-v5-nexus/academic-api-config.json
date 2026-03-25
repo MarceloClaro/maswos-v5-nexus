@@ -1,0 +1,98 @@
+{
+  "name": "maswos-academic-api-config",
+  "version": "1.0.0",
+  "description": "Configuração de APIs acadêmicas reais para o MCP Academic",
+  "apis": {
+    "arxiv": {
+      "name": "arXiv",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "search": "http://export.arxiv.org/api/query"
+      },
+      "auth": "Não requer autenticação"
+    },
+    "crossref": {
+      "name": "CrossRef",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "works": "https://api.crossref.org/works"
+      },
+      "auth": "Não requer autenticação"
+    },
+    "openalex": {
+      "name": "OpenAlex",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "works": "https://api.openalex.org/works"
+      },
+      "auth": "Não requer autenticação (10k/mês)"
+    },
+    "pubmed": {
+      "name": "PubMed/NCBI",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "esearch": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+      },
+      "auth": "API key opcional"
+    },
+    "europe_pmc": {
+      "name": "Europe PMC",
+      "status": "open",
+      "country": "UK",
+      "endpoints": {
+        "search": "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+      },
+      "auth": "Não requer autenticação"
+    },
+    "osf": {
+      "name": "Open Science Framework",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "nodes": "https://api.osf.io/v2/nodes"
+      },
+      "auth": "Não requer autenticação"
+    },
+    "nasa": {
+      "name": "NASA Open APIs",
+      "status": "open",
+      "country": "US",
+      "endpoints": {
+        "apod": "https://api.nasa.gov/planetary/apod",
+        "images": "https://images-api.nasa.gov/search"
+      },
+      "auth": "DEMO_KEY ou API key gratuita"
+    },
+    "dadosgov": {
+      "name": "Dados.gov.br",
+      "status": "open",
+      "country": "BR",
+      "endpoints": {
+        "search": "https://dados.gov.br/api"
+      },
+      "auth": "Não requer autenticação"
+    }
+  },
+  "brazilian_sources": {
+    "scielo": {
+      "name": "SciELO Brasil",
+      "status": "requires_api_key",
+      "note": "ArticleMeta requer biblioteca Python articlemetaapi"
+    },
+    "ipeadata": {
+      "name": "IPEA Dados",
+      "status": "open",
+      "note": "OData API, funciona em desenvolvimento local"
+    },
+    "ibge": {
+      "name": "IBGE",
+      "status": "open",
+      "note": "API de geociências"
+    }
+  },
+  "last_updated": "2026-03-21"
+}

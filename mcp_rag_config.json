@@ -1,0 +1,326 @@
+{
+  "name": "maswos-rag",
+  "version": "5.0.0-NEXUS",
+  "description": "MASWOS V5 NEXUS - Módulo RAG Avançado com 9 estratégias de recuperação",
+  "architecture": {
+    "rag_strategies": [
+      "vanilla",
+      "memory",
+      "agentic", 
+      "graph",
+      "hybrid",
+      "crag",
+      "adaptive",
+      "fusion",
+      "hyde"
+    ],
+    "transformer_integration": true,
+    "layers": ["Encoder", "Retrieval", "Validation", "Augmentation", "Generation", "Output"]
+  },
+  "rag_modules": {
+    "vanilla": {
+      "class": "VanillaRAG",
+      "path": "rag.classic.vanilla_rag",
+      "description": "Fluxo básico RAG: Retriever → Augmentation → Generation",
+      "use_cases": ["busca_basica", "perguntas_fatos"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R01", "R02", "R03"]
+      }
+    },
+    "memory": {
+      "class": "MemoryRAG",
+      "path": "rag.memory.memory_rag", 
+      "description": "RAG com memória Redis para sessões longas",
+      "use_cases": ["revisao_artigo", "sessoes_iterativas"],
+      "requires": ["redis"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R04", "R05"]
+      }
+    },
+    "agentic": {
+      "class": "AgenticRAG",
+      "path": "rag.agentic.agentic_rag",
+      "description": "RAG com agentes para roteamento dinâmico entre fontes",
+      "use_cases": ["multiplas_fontes", "roteamento_inteligente"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R06", "R07", "R08"]
+      }
+    },
+    "graph": {
+      "class": "GraphRAG",
+      "path": "rag.graph.graph_rag",
+      "description": "RAG com grafo de conhecimento Neo4j",
+      "use_cases": ["rede_citacoes", "relacoes_autores", "conceitos"],
+      "requires": ["neo4j"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R09", "R10"]
+      }
+    },
+    "hybrid": {
+      "class": "HybridRAG",
+      "path": "rag.hybrid.hybrid_rag",
+      "description": "Combina busca vetorial com busca em grafos",
+      "use_cases": ["analise_completa", "contexto_estrutural"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R11", "R12"]
+      }
+    },
+    "crag": {
+      "class": "CRAG",
+      "path": "rag.corrective.crag",
+      "description": "Corrective RAG - valida qualidade das fontes",
+      "use_cases": ["validacao_fontes", "dados_criticos", "jurisprudencia", "estatisticas"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R13", "R14", "R15"]
+      }
+    },
+    "adaptive": {
+      "class": "AdaptiveRAG",
+      "path": "rag.adaptive.adaptive_rag",
+      "description": "Adapta estratégia conforme complexidade da pergunta",
+      "use_cases": ["perguntas_variaveis", "estrategia_automatica"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R16", "R17"]
+      }
+    },
+    "fusion": {
+      "class": "RAGFusion",
+      "path": "rag.fusion.rag_fusion",
+      "description": "RAG-Fusion com Reciprocal Rank Fusion",
+      "use_cases": ["multiplas_fontes", "capes_scielo_tribunais_ibge"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R18", "R19", "R20"]
+      }
+    },
+    "hyde": {
+      "class": "HyDE",
+      "path": "rag.hyde.hyde",
+      "description": "Hypothetical Document Embedding",
+      "use_cases": ["conceitos_especificos", "terminologia_tecnica"],
+      "integration": {
+        "mcp": "academic",
+        "agents": ["R21"]
+      }
+    }
+  },
+  "orchestrator": {
+    "class": "RAGOrchestrator",
+    "path": "rag.orchestrator.rag_orchestrator",
+    "description": "Controller master que integra todos os tipos de RAG",
+    "default_strategy": "adaptive",
+    "features": [
+      "query_routing",
+      "fallback",
+      "batch_processing",
+      "statistics",
+      "session_management"
+    ]
+  },
+  "agents": {
+    "R01": {
+      "name": "VanillaRetriever",
+      "layer": "Retrieval",
+      "rag_type": "vanilla",
+      "description": "Executor de busca básica"
+    },
+    "R02": {
+      "name": "VanillaAugmenter",
+      "layer": "Augmentation", 
+      "rag_type": "vanilla",
+      "description": "Construtor de prompts"
+    },
+    "R03": {
+      "name": "VanillaGenerator",
+      "layer": "Output",
+      "rag_type": "vanilla",
+      "description": "Gerador de respostas"
+    },
+    "R04": {
+      "name": "MemoryManager",
+      "layer": "Retrieval",
+      "rag_type": "memory",
+      "description": "Gerenciador de memória Redis"
+    },
+    "R05": {
+      "name": "SessionContextBuilder",
+      "layer": "Augmentation",
+      "rag_type": "memory",
+      "description": "Construtor de contexto de sessão"
+    },
+    "R06": {
+      "name": "DatasetRouter",
+      "layer": "Retrieval",
+      "rag_type": "agentic",
+      "description": "Roteador de datasets"
+    },
+    "R07": {
+      "name": "QueryClassifier",
+      "layer": "Encoder",
+      "rag_type": "agentic",
+      "description": "Classificador de queries"
+    },
+    "R08": {
+      "name": "AgentCoordinator",
+      "layer": "Control",
+      "rag_type": "agentic",
+      "description": "Coordenador de agentes"
+    },
+    "R09": {
+      "name": "GraphEntityExtractor",
+      "layer": "Encoder",
+      "rag_type": "graph",
+      "description": "Extrator de entidades"
+    },
+    "R10": {
+      "name": "GraphQueryExecutor",
+      "layer": "Retrieval",
+      "rag_type": "graph",
+      "description": "Executor de queries em grafo"
+    },
+    "R11": {
+      "name": "HybridFusionEngine",
+      "layer": "Retrieval",
+      "rag_type": "hybrid",
+      "description": "Motor de fusão híbrida"
+    },
+    "R12": {
+      "name": "ContextAggregator",
+      "layer": "Augmentation",
+      "rag_type": "hybrid",
+      "description": "Agregador de contexto"
+    },
+    "R13": {
+      "name": "QualityEvaluator",
+      "layer": "Validation",
+      "rag_type": "crag",
+      "description": "Avaliador de qualidade"
+    },
+    "R14": {
+      "name": "RetrievalCorrector",
+      "layer": "Retrieval",
+      "rag_type": "crag",
+      "description": "Corrige resultados de busca"
+    },
+    "R15": {
+      "name": "SourceValidator",
+      "layer": "Validation",
+      "rag_type": "crag",
+      "description": "Validador de fontes"
+    },
+    "R16": {
+      "name": "QueryComplexityAnalyzer",
+      "layer": "Encoder",
+      "rag_type": "adaptive",
+      "description": "Analisador de complexidade"
+    },
+    "R17": {
+      "name": "StrategySelector",
+      "layer": "Control",
+      "rag_type": "adaptive",
+      "description": "Seletor de estratégia"
+    },
+    "R18": {
+      "name": "MultiSourceRetriever",
+      "layer": "Retrieval",
+      "rag_type": "fusion",
+      "description": "Recuperador multi-fonte"
+    },
+    "R19": {
+      "name": "RRFScorer",
+      "layer": "Retrieval",
+      "rag_type": "fusion",
+      "description": "Calculador RRF"
+    },
+    "R20": {
+      "name": "SourceWeighter",
+      "layer": "Augmentation",
+      "rag_type": "fusion",
+      "description": "Ponderador de fontes"
+    },
+    "R21": {
+      "name": "HypotheticalDocGenerator",
+      "layer": "Encoder",
+      "rag_type": "hyde",
+      "description": "Gerador de docs hipotéticos"
+    }
+  },
+  "quality_gates": {
+    "GR0": {"threshold": 1.0, "agents": ["R01"]},
+    "GR1": {"threshold": 0.80, "agents": ["R04", "R06", "R09"]},
+    "GR2": {"threshold": 0.85, "agents": ["R13", "R14", "R15"]},
+    "GR3": {"threshold": 0.90, "agents": ["R16", "R17"]},
+    "GR4": {"threshold": 0.95, "agents": ["R11", "R12", "R18"]},
+    "GRF": {"threshold": 0.98, "agents": ["R03", "R05", "R08"]}
+  },
+  "integration": {
+    "mcp_servers": {
+      "maswos-academic": {
+        "rag_enabled": true,
+        "default_rag": "adaptive",
+        "vector_store": "chroma",
+        "supports": ["vanilla", "memory", "agentic", "graph", "hybrid", "crag", "adaptive", "fusion", "hyde"]
+      },
+      "maswos-juridico": {
+        "rag_enabled": true,
+        "recommended_rag": "crag",
+        "focus": ["validacao_fontes", "jurisprudencia"]
+      },
+      "pageindex-mcp": {
+        "rag_enabled": false,
+        "description": "Já possui tree-based RAG nativo"
+      }
+    },
+    "external_services": {
+      "redis": {
+        "enabled": true,
+        "required_for": ["memory"],
+        "default_host": "localhost",
+        "default_port": 6379
+      },
+      "neo4j": {
+        "enabled": true,
+        "required_for": ["graph"],
+        "default_uri": "bolt://localhost:7687"
+      },
+      "chroma": {
+        "enabled": true,
+        "required_for": ["vanilla", "agentic", "fusion", "hyde"]
+      }
+    }
+  },
+  "pipelines": {
+    "basic_research": {
+      "rag_type": "vanilla",
+      "agents": ["R01", "R02", "R03"],
+      "quality_gate": "GR0"
+    },
+    "validated_research": {
+      "rag_type": "crag",
+      "agents": ["R13", "R14", "R15", "R02", "R03"],
+      "quality_gate": "GR2"
+    },
+    "comprehensive_research": {
+      "rag_type": "hybrid",
+      "agents": ["R09", "R10", "R11", "R12", "R02", "R03"],
+      "quality_gate": "GR4"
+    },
+    "adaptive_research": {
+      "rag_type": "adaptive",
+      "agents": ["R16", "R17", "R01", "R02", "R03"],
+      "quality_gate": "GR3"
+    },
+    "multi_source_research": {
+      "rag_type": "fusion",
+      "agents": ["R18", "R19", "R20", "R02", "R03"],
+      "quality_gate": "GR4"
+    }
+  }
+}

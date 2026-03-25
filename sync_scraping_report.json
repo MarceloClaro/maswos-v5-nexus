@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-03-22T16:05:33.761847",
+  "action": "sync_scraping_to_mcp",
+  "changes": [
+    "Integrated Scraping Agent (N12_integrated_scraper) adicionado à camada Collection",
+    "Fallback habilitado para scrapers N06 (STF) e N09 (IBGE)",
+    "Quality Gate G1_scraping adicionado",
+    "Layer alignment atualizado"
+  ],
+  "new_capabilities": [
+    "advanced_scraping",
+    "cache_management",
+    "retry_with_backoff",
+    "browser_headers_rotation",
+    "ssl_bypass"
+  ],
+  "status": "SUCCESS"
+}

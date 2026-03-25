@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-03-22T15:54:39Z",
+  "pending_syncs": [
+    {
+      "source": "maswos-mcp",
+      "target": "ecosystem-transformer",
+      "agents": [
+        "query_builder",
+        "skill_synthesizer"
+      ],
+      "status": "pending"
+    }
+  ],
+  "alignment_updates": [
+    {
+      "mcp": "maswos-juridico",
+      "layer": "Encoder",
+      "add": [
+        "N03a_chain_of_thought"
+      ],
+      "remove": []
+    }
+  ]
+}
